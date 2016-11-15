@@ -1,0 +1,63 @@
+body{
+	background-color: #5577FF;
+}
+
+.back_link{
+	background-color: #1444FF;
+	padding: 20px;
+}
+
+.icon_img{
+	text-align: center;
+	width: 100px;
+	height: 100px;
+}
+
+.left_img{
+	position: absolute;
+	left: 20px;
+	top:10px;
+	width: 800px;
+	height: 450px;
+}
+
+.right_form{
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	padding:20px;
+	width:inherit;
+	background-color: #006699;
+}
+
+.form_title{
+	color: white;
+	font-size: xx-large;
+	text-align: center;
+}
+
+.form_normal{
+	color: white;
+	font-size: large;
+	padding-left: 30px;
+}
+
+
+.form_submit{
+	font-size: x-large;
+	text-align: center;
+	width: 100px;
+}
+
+	
+a{
+	color: white;
+	text-align: center;
+	font-size:medium;
+}
+
+#daily_link{
+	color: red;
+	text-align: center;
+	font-size:small;;
+}

@@ -1,11 +1,13 @@
 package com.kai30.javabean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Daily {
+public class Daily implements Serializable{
 	String username;
 	Date date;
-	String content;
+	Content content;
 	String title;
 	String subject;
 	
@@ -13,7 +15,7 @@ public class Daily {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Daily(String username, Date date, String content, String title, String subject) {
+	public Daily(String username, Date date, Content content, String title, String subject) {
 		super();
 		this.username = username;
 		this.date = date;
@@ -34,12 +36,13 @@ public class Daily {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public String getContent() {
+	public Content getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(Content content) {
 		this.content = content;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -88,8 +91,5 @@ public class Daily {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 }

@@ -49,11 +49,17 @@ body{
 a{
 	color: white;
 	text-align: center;
-	font-size:x-large;
+	font-size:large;
 }
 
 #daily_link{
 	color: red;
 	text-align: center;
 	font-size:small;
+}
+
+#daily_link_2{
+	color: white;
+	text-align: center;
+	font-size:medium;
 }

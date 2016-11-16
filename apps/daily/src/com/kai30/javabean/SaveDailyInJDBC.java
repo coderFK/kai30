@@ -36,7 +36,7 @@ private DataSource dataSource;
 			ResultSet result = state.executeQuery();
 			while(result.next()){
 				dailys.addFirst(new Daily(daily.getUsername(), 
-						result.getTimestamp(1), result.getString(2), 
+						result.getTimestamp(1), new Content(result.getString(2)), 
 						result.getString(3), result.getString(4)));
 			}
 		} catch (SQLException e) {
@@ -77,7 +77,7 @@ private DataSource dataSource;
 					"insert into t_daily(name, date, content, title, subject) values(?, ?, ?, ?, ?)");
 			state.setString(1, daily.getUsername());
 			state.setTimestamp(2, new Timestamp( daily.getDate().getTime()));
-			state.setString(3, daily.getContent());
+			state.setString(3, daily.getContent().toString());
 			state.setString(4, daily.getTitle());
 			state.setString(5, daily.getSubject());
 			state.executeUpdate();
@@ -142,6 +142,92 @@ private DataSource dataSource;
 		}
 		
 	}
+
+	@Override
+	public List<Daily> getSubjectDailys(Daily daily) {
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<Daily> dailys = new LinkedList<Daily>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select date, content, title, subject from t_daily where name=? and subject=?");
+			state.setString(1, daily.getUsername());
+			state.setString(2, daily.getSubject());
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				dailys.addFirst(new Daily(daily.getUsername(), 
+						result.getTimestamp(1), new Content(result.getString(2)), 
+						result.getString(3), result.getString(4)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return dailys;
+	}
+
+	@Override
+	public List<String> getSubjects(Daily daily) {
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<String> subjects = new LinkedList<String>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select subject from t_daily where name=?");
+			state.setString(1, daily.getUsername());
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				subjects.addFirst(result.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return subjects;
+	}
+	
 	
 //	public class Cmp implements Comparator<Date>{
 //		@Override

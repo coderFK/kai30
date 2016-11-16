@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import com.kai30.bean.ClassBean;
 import com.kai30.bean.PackageBean;
+import com.kai30.util.StringUtil;
 
 public class SelectFromJDBC implements Select{
 	private TreeSet<PackageBean> pbList = 
@@ -22,7 +23,7 @@ public class SelectFromJDBC implements Select{
 	public SelectFromJDBC(String key, boolean isCaseSensitive) {
 		super();
 		
-		if(!isInvalidKey(key)){
+		if(!StringUtil.isInvalidKey(key)){
 			searchKey(key, isCaseSensitive);
 		}
 	}
@@ -113,21 +114,6 @@ public class SelectFromJDBC implements Select{
 
 	public TreeSet<ClassBean> getCbList() {
 		return cbList;
-	}
-	
-	private boolean isInvalidKey(String key){
-		if(key==null){
-			return true;
-		}
-		else{
-			//将字符串首尾的空格去除
-			key = key.trim();
-		}
-		//如果之前的关键字是空字符串或者全为空格，则搜索无效
-		if(key.length()==0){
-			return true;
-		}
-		return false;
 	}
 	
 	private DataSource getDataSource(){

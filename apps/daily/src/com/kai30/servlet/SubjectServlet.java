@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Daily;
 import com.kai30.javabean.UserService;
-import com.kai30.util.StringUtil;
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class SubjectServlet
  */
-@WebServlet(urlPatterns={ "/user/*"}, initParams={
-	@WebInitParam(name="USER_VIEW", value="/user.jsp")
+@WebServlet(urlPatterns={ "/subject/*"}, initParams={
+	@WebInitParam(name="SUBJECT_VIEW", value="/subject.jsp")
 })
-public class UserServlet extends HttpServlet {
+public class SubjectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static String userView;
+    private static String subjectView;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserServlet() {
+    public SubjectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +34,7 @@ public class UserServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		userView = getServletConfig().getInitParameter("USER_VIEW");
+		subjectView = getServletConfig().getInitParameter("SUBJECT_VIEW");
 	}
 
 	/**
@@ -49,18 +48,11 @@ public class UserServlet extends HttpServlet {
 	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		String username = request.getPathInfo().substring(1);
-		String subject = (String) request.getParameter("subject");
+		System.out.println(username);
+		System.out.println(username);
 		Daily daily = new Daily();
 		daily.setUsername(username);
-		List<Daily> dailys;
-		if(StringUtil.isInvalidKey(subject)){
-			dailys =us.getDailys(daily);
-		}
-		else{
-			daily.setSubject(subject);
-			dailys =us.getSubjectDailys(daily);
-		}
-		
+		List<Daily> dailys =us.getDailys(daily);
 		if(dailys.isEmpty()){
 			request.setAttribute("user_err", "抱歉，该用户不存在或者他还没有日志。");
 		}
@@ -68,8 +60,8 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("user_name", username + "的日志");
 		}
 		request.setAttribute("dailys", dailys);
-		System.out.println(userView);
-		request.getRequestDispatcher(userView).forward(request, response);
+		System.out.println(subjectView);
+		request.getRequestDispatcher(subjectView).forward(request, response);
 	}
 
 	/**
@@ -79,5 +71,4 @@ public class UserServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		process(request, response);
 	}
-
 }

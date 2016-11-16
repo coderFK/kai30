@@ -17,6 +17,16 @@ public class UserService {
 		return dailyDAO.getDailys(daily);
 	}
 	
+	public List<Daily> getSubjectDailys(Daily daily){
+		// TODO Auto-generated method stub
+		return dailyDAO.getSubjectDailys(daily);
+	}
+	
+	public List<String> getSubjects(Daily daily){
+		// TODO Auto-generated method stub
+		return dailyDAO.getSubjects(daily);
+	}
+	
 	public void addDaily(Daily daily){
 		dailyDAO.addDaily(daily);
 	}

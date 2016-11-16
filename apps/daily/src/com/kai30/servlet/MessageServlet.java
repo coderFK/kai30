@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
 import com.kai30.javabean.UserService;
+import com.kai30.util.StringUtil;
 
 /**
  * Servlet implementation class MessageServlet
@@ -64,23 +66,28 @@ public class MessageServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
 		String subject = request.getParameter("subject");
-		if(title == null){
-			title = "";
-		}
+		
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		Daily daily = new Daily();
 		daily.setUsername(name);
-		if(content!=null && content.length()!=0){
-			System.out.println("content.length()="+ content.length() +"content="+content);
-			
+		//主题为空则为设置为其他
+		if(StringUtil.isInvalidKey(subject)){
+			subject = "其他";
+		}
+		if(StringUtil.isInvalidKey(content)||StringUtil.isInvalidKey(title)){
+			request.setAttribute("msg", "写日志");
+		}
+		else{
 			daily.setDate(new Date());
-			daily.setContent(content);
+			daily.setContent(new Content(content));
 			daily.setTitle(title);
 			daily.setSubject(subject);
 			us.addDaily(daily);
 		}
 		List<Daily> dailys = us.getDailys(daily);
+		List<String> subjects = us.getSubjects(daily);
 		request.setAttribute("dailys", dailys);
+		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);
 	}
 

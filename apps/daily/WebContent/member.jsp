@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/index.css" type="text/css">
+
 <title>日志</title>
 </head>
 <body>
@@ -21,26 +22,39 @@
 		<a href="/home" target="_top">主页</a>
 		<a href="/apidoc" target="_top">API帮助文档</a>
 		<a href="logout.do" target="_top">退出当前账号</a>
+		<br />
+		<h3>${sessionScope.login }登陆成功!</h3>
+	</div>
+	<hr />
+	<div>
+		<h2>${requestScope.msg}</h2>	
+		<form action='message.do' method='post'>
+		分类：
+		<br />
+		<input type="text" name="subject" />（可填“Java”，“Linux”或“数据库”字段，也可不填）
+		<br />
+		标题：
+		<br />
+		<textarea cols='80' rows='1' name="title" ></textarea>
+		<br />
+		内容：
+		<br />
+		<textarea cols='80' rows='6' name='content' ></textarea>
+		<br>
+	    <button type='submit'>送出</button>
+	    </form>
 	</div>
 	
-	<h3>${sessionScope.login }登陆成功!</h3>
-		
-	<form action='message.do' method='post'>
-	主题：
-	<br />
-	<input type="text" name="subject" />（可根据主题分类日志，可填“Java”，“Linux”，“其他”之类）
-	<br />
-	标题：
-	<br />
-	<textarea cols='80' rows='1' name="title" ></textarea>
-	<br />
-	内容：
-	<br />
-	<textarea cols='80' rows='6' name='content' ></textarea>
-	<br>
-    <button type='submit'>送出</button>
-    </form><br />
     
+    <hr />
+   	<h3>分类查找日志：</h3>
+   	<c:forEach var="sub" items="${requestScope.subjects }">
+   		<a href="/daily/user/${sessionScope.login}?subject=${sub}" id="daily_link2"><c:out value="${sub}"/></a>
+   	</c:forEach>
+   	<hr />
+   	
+   	
+   	<h3>所有日志：</h3>
     <daily:Dailys/>
     
 		

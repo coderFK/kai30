@@ -15,10 +15,20 @@
 <body>
 	<div>
 		<a href="/home" target="_top">主页</a>
+		<a href="/daily" target="_top">写日志</a>
 		<a href="/apidoc" target="_top">API帮助文档</a>
 	</div>
 	
-	<h2>${requestScope.user_err}</h2>
+	<c:choose>
+		<c:when test="${requestScope.user_err!=null}">
+			<h2>${requestScope.user_err}</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>${requestScope.user_name}</h2>
+		</c:otherwise>
+	</c:choose>
+	
+	<hr/>
 	<daily:Dailys/>
 		
 </body>

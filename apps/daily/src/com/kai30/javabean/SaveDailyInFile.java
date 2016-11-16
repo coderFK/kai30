@@ -40,7 +40,7 @@ public class SaveDailyInFile implements DailyDAO{
 					text.append(line);
 				}
 				
-				Daily b = new Daily(daily.getUsername(), date, text.toString(), "", "");
+				Daily b = new Daily(daily.getUsername(), date, new Content(text.toString()), "", "");
 				dailys.addFirst(b);
 			}
 			catch(IOException e){
@@ -65,7 +65,7 @@ public class SaveDailyInFile implements DailyDAO{
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-			bw.write(daily.getContent());
+			bw.write(daily.getContent().toString());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -101,6 +101,18 @@ public class SaveDailyInFile implements DailyDAO{
 			// TODO Auto-generated method stub
 			return name.endsWith(".txt");
 		}
+	}
+
+	@Override
+	public List<Daily> getSubjectDailys(Daily blah) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getSubjects(Daily blah) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 //	public class Cmp implements Comparator<Date>{

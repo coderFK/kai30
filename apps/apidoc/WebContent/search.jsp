@@ -12,7 +12,7 @@
 
 	<div>
 	
-		<div class="back_link">
+		<div>
 		<a href="/home" target="_top" style="font-size:x-large;">主页</a>
 		</div>
 		<br />

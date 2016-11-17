@@ -1,10 +1,6 @@
 package com.kai30.servlet;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -15,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kai30.javabean.Daily;
-import com.kai30.javabean.UserService;
+import com.kai30.model.UserService;
 
 /**
  * Servlet implementation class DeleteServlet

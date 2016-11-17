@@ -18,14 +18,14 @@
 
 	
 	
-<div class="right_form" style='background-color: #CC9909'>
+<div class="right_form" style='background-color: #CC9909; width: 400px;'>
 	<c:if test="${requestScope.errors!=null}">
 		<c:forEach var="err" items="${requestScope.errors}">
 			<h3>${err} </h3>
 		</c:forEach>
 	</c:if>
-	<a href="index.jsp" >返回</a>
-	<form method='post' action='register.do'>
+	<a href="/" >返回</a>
+	<form method='post' action='/home/register.do'>
       	<div class="form_title">会员注册</div>
       	<br />
       	

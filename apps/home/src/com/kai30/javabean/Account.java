@@ -2,11 +2,11 @@ package com.kai30.javabean;
 
 public class Account {
 	String email = null; 
-	String name = null;
+	String username = null;
 	String password;
-	public Account(String name, String password, String email) {
+	public Account(String username, String password, String email) {
 		super();
-		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.email = email;
 	}
@@ -16,11 +16,11 @@ public class Account {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

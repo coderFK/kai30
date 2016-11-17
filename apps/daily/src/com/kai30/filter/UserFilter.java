@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns={"/delete.do", "/logout.do", "/member.jsp", "/message.do"},
-			initParams={@WebInitParam(name="LOGIN_VIEW", value="/home/index.jsp")})
+			initParams={@WebInitParam(name="LOGIN_VIEW", value="/home")})
 public class UserFilter implements Filter{
 	private String loginView = null;
 	private HttpServletRequest req;
@@ -33,7 +33,7 @@ public class UserFilter implements Filter{
 		req = (HttpServletRequest) request;
 		sessionDaily = req.getSession();
 		
-		
+		//其中contextDaily.getContext("/")表示取得"home"的上下文（context）
 		if(sessionDaily.getAttribute("login")!=null){
 			chain.doFilter(request, response);
 		}

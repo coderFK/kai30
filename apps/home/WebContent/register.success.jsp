@@ -8,6 +8,6 @@
 </head>
 <body>
 		<h1>${param.username}注册成功</h1>
-		<a href='index.jsp'>返回</a>
+		<a href='/home'>返回</a>
 </body>
 </html>

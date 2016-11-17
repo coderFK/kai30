@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Account;
-import com.kai30.javabean.UserService;
+import com.kai30.model.UserService;
 
 
 
@@ -38,7 +38,7 @@ request.getLocalPort();    //取得服务器端口
 @WebServlet("/findPassword.do")
 public class FindPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final String PAGE = "findPassword.jsp";
 	String from = "smtp.qq.com";
 	String adminUsername = "3311705190@qq.com";
 	String adminPassword = "quxkovbqpxtocjfd";
@@ -93,15 +93,15 @@ public class FindPasswordServlet extends HttpServlet {
 			});
 			Message message = createEmail(ses, account, request);
 			Transport.send(message);
-			request.setAttribute("name", account.getName());
+			request.setAttribute("name", account.getUsername());
 			request.setAttribute("msg", "发送邮件成功");
 			request.setAttribute("loginErr", "发送邮件成功");
-			request.getRequestDispatcher("findPassword.jsp").forward(request, response);
+			request.getRequestDispatcher(PAGE).forward(request, response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			request.setAttribute("name", account.getName());
+			request.setAttribute("name", account.getUsername());
 			request.setAttribute("msg", "发送邮件失败");
-			request.getRequestDispatcher("findPassword.jsp").forward(request, response);
+			request.getRequestDispatcher(PAGE).forward(request, response);
 			e.printStackTrace();
 			
 		}
@@ -115,7 +115,7 @@ public class FindPasswordServlet extends HttpServlet {
 	    String path = "http://123.206.213.249/home";
 	    String text = "<html>"
 	    		+ "<body>"
-	    		+ "<h5>"+ account.getName() +"，您好！您的密码为:" + account.getPassword()
+	    		+ "<h5>"+ account.getUsername() +"，您好！您的密码为:" + account.getPassword()
 	    		+ "<br />您可以 <a href='"+path+"'> 马上登陆</a>"
 	    		+ "</body>"
 	    		+ "</html>";

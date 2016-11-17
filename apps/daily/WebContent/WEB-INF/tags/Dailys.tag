@@ -4,17 +4,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 	<c:forEach var="b" items="${requestScope.dailys}">
-    	用户：<em>${b.getUsername()}</em>
-    	 发布日期：<em><fmt:formatDate value="${b.getDate()}" dateStyle="full" timeStyle="full"/></em>
-    	<br />
-    	 分类：<a href="/daily/user/${b.getUsername()}?subject=${b.getSubject()}" id="daily_link2"><c:out value="${b.getSubject()}"/></a>
-    	<br />
-    	 标题：<b ><c:out value="${b.getTitle()}"/></b>
+		 标题：<b ><c:out value="${b.getTitle()}"/></b>
         <br />
+       	 分类：<a href="/daily/user/${b.getUsername()}?subject=${b.getSubject()}" id="daily_link2"><c:out value="${b.getSubject()}"/></a>
+    	<br />
+    	用户：<b >${b.getUsername()}</b>
+    	 发布日期：<b><fmt:formatDate value="${b.getDate()}" dateStyle="full" timeStyle="full"/></b>
+    	<br />
         <br />
                     内容：
         <br />           	
-        
         <c:forEach var="line" items="${b.getContent().getTextList()}">
         	<b>${line}</b>
         </c:forEach>

@@ -6,10 +6,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.TreeSet;
-import java.util.TreeSet;
 
-import com.kai30.bean.ClassBean;
-import com.kai30.bean.PackageBean;
+import com.kai30.javabean.ClassBean;
+import com.kai30.javabean.PackageBean;
+
+import java.util.TreeSet;
 
 public class SelectFromWEB implements Select{
 	private TreeSet<PackageBean> pbList = new TreeSet<PackageBean>();

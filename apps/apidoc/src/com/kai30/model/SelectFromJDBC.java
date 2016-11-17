@@ -10,8 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.kai30.bean.ClassBean;
-import com.kai30.bean.PackageBean;
+import com.kai30.javabean.ClassBean;
+import com.kai30.javabean.PackageBean;
 import com.kai30.util.StringUtil;
 
 public class SelectFromJDBC implements Select{
@@ -121,7 +121,7 @@ public class SelectFromJDBC implements Select{
 		try {
 			Context context = new InitialContext();
 			Context envContext = (Context) context.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/apidoc");
+			dataSource = (DataSource) envContext.lookup("jdbc/kai30");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

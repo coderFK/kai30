@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kai30.javabean.UserService;
+import com.kai30.model.UserService;
 
 /**
  * Servlet implementation class ControllerServlet

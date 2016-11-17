@@ -124,17 +124,21 @@
      
       
       
-        <Context antiJARLocking="true" docBase="home" path="/home" crossContext="true" reloadable="true" source="org.eclipse.jst.jee.server:home">
-			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/daily" password="3721" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/daily?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
+        <Context antiJARLocking="true" crossContext="true" docBase="ROOT" path="" reloadable="true" source="org.eclipse.jst.jee.server:ROOT">
+   		</Context>
+     
+		 <Context antiJARLocking="true" crossContext="true" docBase="home" path="/home" reloadable="true" source="org.eclipse.jst.jee.server:home">
+			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/kai30" password="123456" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/kai30?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
    		</Context>
 		
-		<Context antiJARLocking="true" docBase="daily" path="/daily" crossContext="true" reloadable="true" source="org.eclipse.jst.jee.server:daily">
-			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/daily" password="3721" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/daily?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
+		<Context antiJARLocking="true" crossContext="true" docBase="daily" path="/daily" reloadable="true" source="org.eclipse.jst.jee.server:daily">
+			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/kai30" password="123456" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/kai30?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
 		 </Context>
 		
-		<Context antiJARLocking="true" docBase="apidoc" path="/apidoc" crossContext="true" reloadable="true" source="org.eclipse.jst.jee.server:apidoc">
-			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/apidoc" password="3721" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/apidoc?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
+		<Context antiJARLocking="true" crossContext="true" docBase="apidoc" path="/apidoc" reloadable="true" source="org.eclipse.jst.jee.server:apidoc">
+			<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/kai30" password="123456" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/kai30?useUnicode=true&amp;characterEncoding=UTF8" username="root"/>
 		</Context>
+		
 	</Host>
     </Engine>
   </Service>

@@ -1,15 +1,9 @@
 package com.kai30.servlet;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -21,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
-import com.kai30.javabean.UserService;
+import com.kai30.model.UserService;
 import com.kai30.util.StringUtil;
 
 /**
@@ -85,7 +79,7 @@ public class MessageServlet extends HttpServlet {
 			us.addDaily(daily);
 		}
 		List<Daily> dailys = us.getDailys(daily);
-		List<String> subjects = us.getSubjects(daily);
+		Set<String> subjects = us.getSubjects(daily);
 		request.setAttribute("dailys", dailys);
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);

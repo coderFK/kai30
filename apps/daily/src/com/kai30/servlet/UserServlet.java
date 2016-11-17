@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Daily;
-import com.kai30.javabean.UserService;
+import com.kai30.model.UserService;
 import com.kai30.util.StringUtil;
 
 /**
@@ -48,10 +48,10 @@ public class UserServlet extends HttpServlet {
 
 	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
-		String username = request.getPathInfo().substring(1);
+		String name = request.getPathInfo().substring(1);
 		String subject = (String) request.getParameter("subject");
 		Daily daily = new Daily();
-		daily.setUsername(username);
+		daily.setUsername(name);
 		List<Daily> dailys;
 		if(StringUtil.isInvalidKey(subject)){
 			dailys =us.getDailys(daily);
@@ -65,10 +65,9 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("user_err", "抱歉，该用户不存在或者他还没有日志。");
 		}
 		else{
-			request.setAttribute("user_name", username + "的日志");
+			request.setAttribute("user_name", name + "的日志");
 		}
 		request.setAttribute("dailys", dailys);
-		System.out.println(userView);
 		request.getRequestDispatcher(userView).forward(request, response);
 	}
 

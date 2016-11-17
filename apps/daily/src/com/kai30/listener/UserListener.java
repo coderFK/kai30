@@ -8,9 +8,10 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
-import com.kai30.javabean.DailyDAO;
-import com.kai30.javabean.SaveDailyInJDBC;
-import com.kai30.javabean.UserService;
+import com.kai30.model.DailyDAO;
+import com.kai30.model.SaveDailyInJDBC;
+import com.kai30.model.UserService;
+
 
 @WebListener
 public class UserListener implements ServletContextListener{
@@ -30,7 +31,7 @@ public class UserListener implements ServletContextListener{
 		try {
 			context = new InitialContext();
 			Context envContext = (Context) context.lookup("java:/comp/env");
-			DataSource dataSource = (DataSource) envContext.lookup("jdbc/daily");
+			DataSource dataSource = (DataSource) envContext.lookup("jdbc/kai30");
 			DailyDAO dailyDAO = new SaveDailyInJDBC(dataSource);
 			sce.getServletContext().setAttribute("us", new UserService(dailyDAO));
 		} catch (NamingException e) {

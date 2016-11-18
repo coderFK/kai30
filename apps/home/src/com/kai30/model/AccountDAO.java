@@ -11,4 +11,6 @@ public interface AccountDAO {
 	boolean checkLoginIsOk(String name, String password);
 
 	Account getAccount(String name);
+
+	void modifyPassword(String name, String password);
 }

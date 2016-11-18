@@ -19,11 +19,16 @@
 	
 	
 <div class="right_form" style='background-color: #CC9909; width: 400px;'>
-	<c:if test="${requestScope.errors!=null}">
-		<c:forEach var="err" items="${requestScope.errors}">
-			<h3>${err} </h3>
-		</c:forEach>
-	</c:if>
+	<c:choose>
+		<c:when test="${requestScope.errors!=null}">
+			<c:forEach var="err" items="${requestScope.errors}">
+				<h3>${err} </h3>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<h2>${param.username}注册成功</h2>
+		</c:otherwise>
+	</c:choose>
 	<a href="/" >返回</a>
 	<form method='post' action='/home/register.do'>
       	<div class="form_title">会员注册</div>

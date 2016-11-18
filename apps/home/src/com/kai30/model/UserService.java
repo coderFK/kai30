@@ -1,6 +1,6 @@
 package com.kai30.model;
 
-import java.util.List;
+import java.util.Set;
 
 import com.kai30.javabean.Account;
 import com.kai30.javabean.Comment;
@@ -14,17 +14,20 @@ public class UserService {
 		this.commentDAO = commentDAO;
 	}
 	
-	public Account getAccount(String name){
-		return accountDAO.getAccount(name);
+	public Account getAccount(String username){
+		return accountDAO.getAccount(username);
 	}
-	public boolean checkLoginIsOk(String name, String password){
-		return accountDAO.checkLoginIsOk(name, password);
+	public boolean checkLoginIsOk(String username, String password){
+		return accountDAO.checkLoginIsOk(username, password);
 	}
-	public boolean isUserExisted(String name) {
-		return accountDAO.isUserExisted(name);
+	public boolean isUserExisted(String username) {
+		return accountDAO.isUserExisted(username);
 	}
-	public void createUserData(String email, String name, String password){
-		accountDAO.createUserData(email, name, password);
+	public void createUserData(String email, String username, String password){
+		accountDAO.createUserData(email, username, password);
+	}
+	public void modifyPassword(String username, String password){
+		accountDAO.modifyPassword(username, password);
 	}
 	
 	public boolean isInvalidEmail(String email) {
@@ -38,7 +41,7 @@ public class UserService {
 	public void saveComment(Comment comment){
 		commentDAO.saveComment(comment);
 	}
-	public List<Comment> getComments(){
+	public Set<Comment> getComments(){
 		return commentDAO.getComments();
 	}
 	

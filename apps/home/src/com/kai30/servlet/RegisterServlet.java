@@ -18,8 +18,7 @@ import com.kai30.model.UserService;
 @WebServlet("/register.do")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static final String ERROR_PAGE = "register.jsp";
-    private static final String SUCCESS_PAGE = "register.success.jsp";
+    private static final String PAGE = "register.jsp";
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,15 +57,13 @@ public class RegisterServlet extends HttpServlet {
 		if(us.isInvalidePassword(password, confirmedPasswd)){
 			errors.add("密码格式错误或不一致");
 		}
-		String resultPage = ERROR_PAGE;
 		if(errors.isEmpty()){
-			resultPage = SUCCESS_PAGE;
 			us.createUserData(email, name, password);
 		}
 		else{
 			req.setAttribute("errors", errors);
 		}
-		req.getRequestDispatcher(resultPage).forward(req, res);
+		req.getRequestDispatcher(PAGE).forward(req, res);
 	}
 
 	

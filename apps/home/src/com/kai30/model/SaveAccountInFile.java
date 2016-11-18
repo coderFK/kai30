@@ -129,5 +129,11 @@ public class SaveAccountInFile implements AccountDAO{
 		}
 		return null;
 	}
+
+	@Override
+	public void modifyPassword(String name, String password) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

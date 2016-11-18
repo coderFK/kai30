@@ -51,7 +51,6 @@ public class UserFilter implements Filter{
 						return;
 					}
 				}
-				
 			}
 			HttpServletResponse res = (HttpServletResponse) response;
 			res.sendRedirect(loginView);

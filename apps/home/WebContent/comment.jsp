@@ -23,18 +23,26 @@
 			<br />
 			<textarea cols='80' rows='6' name='content' ></textarea>
 			<br />
-		    <button type='submit'>确定</button>
+			<c:choose>
+				<c:when test="${sessionScope.login!=null }">
+					<button type='submit'>确定</button>
+				</c:when>
+				<c:otherwise>
+					<a href="/home"  >请先登陆</a>
+				</c:otherwise>
+			</c:choose>
+		    
 	    </form>
 	</div>
 	
     
 	<hr />   	
    	
-   	<h3>所有日志：</h3>
+   	<h2>所有留言：</h2>
    	
     <c:forEach var="comment" items="${requestScope.comments }">
-    	<b>${comment.getUsername() }</b> <br />
-    	<b>${comment.getDate() }</b> 
+    	用户：<b>${comment.getUsername() }</b>
+    	<em><fmt:formatDate value="${comment.getDate() }" timeStyle="full" dateStyle="full" /> </em>
    		<p>${comment.getContent()}</p>
    		<hr />
    	</c:forEach>

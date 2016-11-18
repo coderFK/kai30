@@ -1,6 +1,8 @@
 package com.kai30.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,10 +30,13 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String name = (String) session.getAttribute("login");
+		HttpSession sessionHome = request.getSession();
+		ServletContext contextHome = request.getServletContext();
+		String name = (String) sessionHome.getAttribute("login");
 		if(name != null){
-			session.invalidate();	
+			sessionHome.invalidate();
+			contextHome.removeAttribute("sessionHome");
+			
 		}
 //		request.logout();
 		response.sendRedirect(LOGIN_VIEW);

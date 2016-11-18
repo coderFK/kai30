@@ -16,6 +16,83 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account` (
+  `username` varchar(15) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES ('kai','123456','123@qqqq.com'),('master','123456','596448451@qq.com');
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account_role`
+--
+
+DROP TABLE IF EXISTS `account_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account_role` (
+  `username` varchar(15) NOT NULL,
+  `role` varchar(15) NOT NULL,
+  PRIMARY KEY (`username`,`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_role`
+--
+
+LOCK TABLES `account_role` WRITE;
+/*!40000 ALTER TABLE `account_role` DISABLE KEYS */;
+INSERT INTO `account_role` VALUES ('kai','member'),('master','master');
+/*!40000 ALTER TABLE `account_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `daily`
+--
+
+DROP TABLE IF EXISTS `daily`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `daily` (
+  `username` varchar(15) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `content` text NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  KEY `username` (`username`),
+  CONSTRAINT `daily_ibfk_1` FOREIGN KEY (`username`) REFERENCES `account` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `daily`
+--
+
+LOCK TABLES `daily` WRITE;
+/*!40000 ALTER TABLE `daily` DISABLE KEYS */;
+INSERT INTO `daily` VALUES ('master','2016-11-17 11:57:48','Java环境变量设置：\r\n新建系统变量:JAVA_HOME 和CLASSPATH \r\n变量名：JAVA_HOME \r\n变量值：C:\\Program Files\\Java\\jdk1.7.0\r\n变量名：CLASSPATH \r\n变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar;\r\n变量名：Path \r\n变量值：%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;','配置java环境变量','java'),('master','2016-11-18 14:53:18','如果是gzip压缩文件：\r\ntar zxvf x.tar.gz\r\n\r\n如果是bzip2压缩的\r\ntar jxvf x.tar.bz2','linux解压命令','linux '),('master','2016-11-18 14:54:26','每个应用程序必须指定Resource，即可在tomcat的conf目录下的server.xml中的<Host>节点中添加以下字段：\r\n<Resource auth=\"Container\" driverClassName=\"com.mysql.jdbc.Driver\" maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" name=\"jdbc/daily\" password=\"3721\" type=\"javax.sql.DataSource\" url=\"jdbc:mysql://localhost:3306/daily?useUnicode=true&amp;characterEncoding=UTF8\" username=\"root\"/>\r\n也可以在项目的META-INF文件夹中的context.xml文件中添加以下类似字段：\r\n<Context antiJARLocking=\"true\" path=\"/Weibo\">\r\n    <Resource name=\"jdbc/weibo\" \r\n      auth=\"Container\" type=\"javax.sql.DataSource\"\r\n      maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" username=\"root\" \r\n      password=\"3721\" driverClassName=\"com.mysql.jdbc.Driver\"\r\n      url=\"jdbc:mysql://localhost:3306/weibo?useUnicode=true&amp;characterEncoding=UTF8\"/>\r\n     \r\n    <Realm className=\"org.apache.catalina.realm.DataSourceRealm\"\r\n      localDataSource=\"true\"\r\n   dataSourceName=\"jdbc/weibo\"\r\n       userTable=\"t_account\" userNameCol=\"name\" userCredCol=\"password\"\r\n   userRoleTable=\"t_account_role\" roleNameCol=\"role\" />\r\n</Context>\r\n推荐第一种\r\n','tomcat配置MySQL的注意点','数据库'),('master','2016-11-18 14:55:19','编辑配置文件\r\nvim /etc/profile \r\n\r\nexport JAVA_HOME=/root/App/jdk8\r\nexport JAVA_BIN=$JAVA_HOME/bin\r\nexport JAVA_LIB=$JAVA_HOME/lib\r\nexport CLASSPATH=.:$JAVA_LIB/tools.jar:$JAVA_LIB/dt.jar\r\nexport PATH=$JAVA_BIN:$PATH\r\n\r\n重置\r\nsource /etc/profile','linux环境下配置java环境变量','java');
+/*!40000 ALTER TABLE `daily` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `java6_class`
 --
 
@@ -67,83 +144,6 @@ INSERT INTO `java6_package` VALUES (1,'java.applet','java/applet/package-frame.h
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_account`
---
-
-DROP TABLE IF EXISTS `t_account`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_account` (
-  `name` varchar(15) NOT NULL,
-  `password` varchar(31) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_account`
---
-
-LOCK TABLES `t_account` WRITE;
-/*!40000 ALTER TABLE `t_account` DISABLE KEYS */;
-INSERT INTO `t_account` VALUES ('ff','123456','3@e.com'),('fk','123456','q@q.com'),('kai','123456','596448451@qq.com'),('master','123456','3311705190@qq.com');
-/*!40000 ALTER TABLE `t_account` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_account_role`
---
-
-DROP TABLE IF EXISTS `t_account_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_account_role` (
-  `name` varchar(15) NOT NULL,
-  `role` varchar(15) NOT NULL,
-  PRIMARY KEY (`name`,`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_account_role`
---
-
-LOCK TABLES `t_account_role` WRITE;
-/*!40000 ALTER TABLE `t_account_role` DISABLE KEYS */;
-INSERT INTO `t_account_role` VALUES ('ff','member'),('fk','member'),('kai','member'),('master','member');
-/*!40000 ALTER TABLE `t_account_role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `t_daily`
---
-
-DROP TABLE IF EXISTS `t_daily`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_daily` (
-  `name` varchar(15) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `content` text NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  KEY `name` (`name`),
-  CONSTRAINT `t_daily_ibfk_1` FOREIGN KEY (`name`) REFERENCES `t_account` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_daily`
---
-
-LOCK TABLES `t_daily` WRITE;
-/*!40000 ALTER TABLE `t_daily` DISABLE KEYS */;
-INSERT INTO `t_daily` VALUES ('kai','2016-11-13 04:20:24','Java环境变量配置：\r\n新建系统变量:JAVA_HOME 和CLASSPATH \r\n变量名：JAVA_HOME \r\n变量值：C:\\Program Files\\Java\\jdk1.7.0\r\n变量名：CLASSPATH \r\n变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar;\r\n变量名：Path \r\n变量值：%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;','配置Java环境变量','Java'),('kai','2016-11-14 08:23:15','本文研究的是同一个Tomcat目录下的两个不同的应用共享同一个session。由于每个WEB应用程序都有一个唯一的一个ServletContext实例对象，本应用中的所有的servlet共享此ServletContext。利用ServletContext中的setAttribute()方法把Session传递过去 然后在另外一个WEB程序中拿到session实例。\r\n一、修改Tomcat中conf的server.xml文件\r\n<Host appBase=\"webapps\" autoDeploy=\"true\" name=\"localhost\" unpackWARs=\"true\" xmlNamespaceAware=\"false\" mlValidation=\"false\"></Host>\r\n修改为：\r\n<Host appBase=\"webapps\" autoDeploy=\"true\" name=\"localhost\" unpackWARs=\"true\" xmlNamespaceAware=\"false\" mlValidation=\"false\">\r\n <Context path=\"/projectA\" reloadable=\"false\" crossContext=\"true\"></Context> \r\n <Context path=\"/projectB\" reloadable=\"false\" crossContext=\"true\"></Context>\r\n</Host>\r\ncrossContext属性在帮助文档中意思:\r\ncrossContext： Set to true if you want calls within this application to ServletContext.getContext() to successfully return a request dispatcher for other web applications running on this virtual host. Set to false (the default) in security conscious environments, to make getContext() always return null.\r\n设置为true说明可以调用另外一个WEB应用程序，通过ServletContext.getContext() 获得ServletContext然后再调用其getattribute()得到对象。\r\n \r\n二、在项目A中，写入以下代码：\r\n项目A为/projectA\r\n项目B为/projectB\r\n项目A中设置Session：\r\nHttpSession session = req.getSession(); \r\nsession.setAttribute(\"name\", \"Tom\");\r\nsession.setMaxInactiveInterval(6565);\r\nServletContext ContextA =req.getSession().getServletContext(); \r\nContextA.setAttribute(\"session\", req.getSession());\r\n项目B中取出Session：\r\nHttpSession session1 =req .getSession();   \r\nServletContext Context = session1.getServletContext();   \r\nServletContext Context1= Context.getContext(\"/myweb\"); // 项目A的虚拟路径\r\nHttpSession session2 =(HttpSession)Context1.getAttribute(\"session\"); \r\nSystem.out.println(\"base传过来的user为:\"+session2.getAttribute(\"name\"));\r\n\r\n原帖地址：http://www.codesky.net/article/201104/174499.html',' Tomcat中两个不同项目共享Session','JavaWeb'),('fk','2016-11-15 14:17:49','林动','qiqi','其他'),('master','2016-11-16 13:11:28','Java环境变量设置：\r\n新建系统变量:JAVA_HOME 和CLASSPATH \r\n变量名：JAVA_HOME \r\n变量值：C:\\Program Files\\Java\\jdk1.7.0\r\n变量名：CLASSPATH \r\n变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar;\r\n变量名：Path \r\n变量值：%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;','java环境变量设置','java');
-/*!40000 ALTER TABLE `t_daily` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user_comment`
 --
 
@@ -152,11 +152,11 @@ DROP TABLE IF EXISTS `user_comment`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(15) NOT NULL,
+  `username` char(15) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `context` text NOT NULL,
+  `content` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,6 +165,7 @@ CREATE TABLE `user_comment` (
 
 LOCK TABLES `user_comment` WRITE;
 /*!40000 ALTER TABLE `user_comment` DISABLE KEYS */;
+INSERT INTO `user_comment` VALUES (1,'master','2016-11-18 01:06:19','第一次'),(2,'master','2016-11-18 01:20:22','测试中');
 /*!40000 ALTER TABLE `user_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -177,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-17 16:11:29
+-- Dump completed on 2016-11-18 22:56:14

@@ -15,10 +15,11 @@
 <div class="right_form" >
 
 	<c:choose>
-		<c:when test="${requestScope.login!=null }">
+		<c:when test="${sessionScope.login!=null }">
 			<ul style="color: #003366">
-				<li><a href="/daily/message.do">${requestScope.login}的日志</a></li>
+				<li><a href="/daily/message.do">${sessionScope.login}的日志</a></li>
 				<li><a href="/daily/logout.do">退出当前账号</a></li>
+				<li><a href="/home/modifyPassword.jsp">修改密码</a></li>
 			</ul>
 			
 		</c:when>

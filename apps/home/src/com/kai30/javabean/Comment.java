@@ -2,7 +2,7 @@ package com.kai30.javabean;
 
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Comparable<Comment>{
 	String username;
 	Date date;
 	String content;
@@ -59,6 +59,19 @@ public class Comment {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(Comment o) {
+		// TODO Auto-generated method stub
+		long cmp = this.getDate().getTime() - o.getDate().getTime();
+		if(cmp< 0){
+			return 1;
+		}
+		else if(cmp > 0){
+			return -1;
+		}
+		
+		return 0;
 	}
 	
 	

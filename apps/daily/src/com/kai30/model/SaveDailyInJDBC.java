@@ -120,8 +120,9 @@ private DataSource dataSource;
 		try {
 			conn = dataSource.getConnection();
 			state = conn.prepareStatement(
-					"delete from daily where date=?");
+					"delete from daily where date=? and username=?");
 			state.setTimestamp(1, new Timestamp( daily.getDate().getTime()));
+			state.setString(2, daily.getUsername());
 			state.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -231,6 +232,92 @@ private DataSource dataSource;
 		}
 		
 		return subjects;
+	}
+
+	@Override
+	public void modifyDaily(Daily daily) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement("update daily SET content=?, title=?, subject=? where date=? and username=?");
+			state.setString(1, daily.getContent().getText());
+			state.setString(2, daily.getTitle());
+			state.setString(3, daily.getSubject());
+			state.setTimestamp(4, new Timestamp(daily.getDate().getTime()));
+			state.setString(5, daily.getUsername());
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+	}
+
+
+	@Override
+	public Daily getDaily(Daily daily) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		Daily targetDaily = null;
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select content, title, subject from daily where date=? and username=?");
+			state.setTimestamp(1, new Timestamp(daily.getDate().getTime()));
+			state.setString(2, daily.getUsername());
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				targetDaily = new Daily(daily.getUsername(), 
+						daily.getDate(), new Content(result.getString(1)), 
+						result.getString(2), result.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return targetDaily;
 	}
 	
 	

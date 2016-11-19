@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns={"/delete.do", "/logout.do", "/member.jsp", "/message.do"},
+@WebFilter(urlPatterns={"/delete.do", "/logout.do", "/member.jsp", "/message.do", "/modify.do"},
 			initParams={@WebInitParam(name="LOGIN_VIEW", value="/home")})
 public class UserFilter implements Filter{
 	private String loginView = null;
@@ -40,29 +40,22 @@ public class UserFilter implements Filter{
 		else{
 			ServletContext contextDaily = req.getServletContext();
 			ServletContext contextHome = contextDaily.getContext("/home");
-			
-			if(contextHome!=null){
+			//在获取login中遇到任何问题重定向到/home
+			try{
 				HttpSession sessionHome = (HttpSession) contextHome.getAttribute("sessionHome");
-				if(sessionHome!=null){
-					String name = (String) sessionHome.getAttribute("login");
-					if(name!=null){
-						sessionDaily.setAttribute("login", name);
-						chain.doFilter(request, response);
-						return;
-					}
-				}
+				String name = (String) sessionHome.getAttribute("login");
+				sessionDaily.setAttribute("login", name);
+				chain.doFilter(request, response);
 			}
-			HttpServletResponse res = (HttpServletResponse) response;
-			res.sendRedirect(loginView);
+			catch(Exception e){
+				HttpServletResponse res = (HttpServletResponse) response;
+				res.sendRedirect(loginView);
+			}
 		}
 	}
 
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-		
 	}
-
-	
-
 }

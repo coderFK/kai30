@@ -38,4 +38,15 @@ public class UserService {
 		dailyDAO.deleteDaily(daily);
 	}
 	
+	public void modifyDaily(Daily daily){
+		dailyDAO.modifyDaily(daily);
+	}
+	
+	public Daily getDaily(Daily daily) {
+		return dailyDAO.getDaily(daily);
+	}
+	
+	public boolean isDailyExisted(Daily daily){
+		return getDaily(daily)!=null;
+	}
 }

@@ -28,28 +28,61 @@
 	<hr />
 	<div>
 		<h2>${requestScope.msg}</h2>	
-		<form action='message.do' method='post'>
-		分类：
-		<br />
-		<input type="text" name="subject" />（可填“Java”，“Linux”或“数据库”字段，也可不填）
-		<br />
-		标题：
-		<br />
-		<textarea cols='80' rows='1' name="title" ></textarea>
-		<br />
-		内容：
-		<br />
-		<textarea cols='80' rows='6' name='content' ></textarea>
-		<br>
-	    <button type='submit'>送出</button>
-	    </form>
+		
+		<c:choose>
+			<c:when test="${requestScope.modify}">
+				<form action='modify.do?time=${requestScope.time.getTime() }' method='post'>
+				分类：
+				<br />
+				<input type="text" name="subject"  value="${requestScope.subject}"/>（可填“Java”，“Linux”或“数据库”字段，也可不填）
+				<br />
+				标题：
+				<br />
+				<textarea cols='80' rows='1' name="title" >${requestScope.title}</textarea>
+				<br />
+				内容：
+				<br />
+				<textarea cols='80' rows='6' name='content' >${requestScope.content}</textarea>
+				<br>
+			    <button type='submit'>修改</button>
+			    </form>
+			</c:when>
+			
+			<c:otherwise>
+				<form action='message.do' method='post'>
+				分类：
+				<br />
+				<input type="text" name="subject"  value="${requestScope.subject}"/>（可填“Java”，“Linux”或“数据库”字段，也可不填）
+				<br />
+				标题：
+				<br />
+				<textarea cols='80' rows='1' name="title" >${requestScope.title}</textarea>
+				<br />
+				内容：
+				<br />
+				<textarea cols='80' rows='6' name='content' >${requestScope.content}</textarea>
+				<br>
+			    <button type='submit'>确认</button>
+			    </form>
+			</c:otherwise>
+		</c:choose>
 	</div>
-	
     
     <hr />
    	<h3>分类查找日志：</h3>
    	<c:forEach var="sub" items="${requestScope.subjects }">
    		<a href="/daily/user/${sessionScope.login}?subject=${sub}" id="daily_link2"><c:out value="${sub}"/></a>
+   	</c:forEach>
+   	<hr />
+   	
+   	<hr />
+   	<h3>按标题查找日志：</h3>
+   	<ul>
+   	
+   	</ul>
+   	<c:forEach var="daily" items="${requestScope.dailys }">
+   		<a href='&#35;${daily.getDate().getTime() }' id="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<br />
    	</c:forEach>
    	<hr />
    	

@@ -7,15 +7,18 @@ import com.kai30.javabean.Daily;
 
 public interface DailyDAO {
 
-	List<Daily> getDailys(Daily blah);
+	List<Daily> getDailys(Daily daily);
 	
-	List<Daily> getSubjectDailys(Daily blah);
+	Daily getDaily(Daily daily);
 	
-	Set<String> getSubjects(Daily blah);
+	List<Daily> getSubjectDailys(Daily daily);
+	
+	Set<String> getSubjects(Daily daily);
 
-	void addDaily(Daily blah);
+	void addDaily(Daily daily);
 
-	void deleteDaily(Daily blah);
+	void deleteDaily(Daily daily);
 
+	void modifyDaily(Daily daily);
 	
 }

@@ -57,7 +57,7 @@ public class MessageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute("login");
-		String content = request.getParameter("content");
+		String content = request.getParameter("content"); 
 		String title = request.getParameter("title");
 		String subject = request.getParameter("subject");
 		
@@ -68,14 +68,18 @@ public class MessageServlet extends HttpServlet {
 		if(StringUtil.isInvalidKey(subject)){
 			subject = "其他";
 		}
+		
 		if(StringUtil.isInvalidKey(content)||StringUtil.isInvalidKey(title)){
 			request.setAttribute("msg", "写日志");
+			request.setAttribute("subject", subject);
+			request.setAttribute("title", title);
+			request.setAttribute("content", content);
 		}
 		else{
-			daily.setDate(new Date());
 			daily.setContent(new Content(content));
 			daily.setTitle(title);
 			daily.setSubject(subject);
+			daily.setDate(new Date());
 			us.addDaily(daily);
 		}
 		List<Daily> dailys = us.getDailys(daily);

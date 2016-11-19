@@ -109,13 +109,25 @@ public class SaveDailyInFile implements DailyDAO{
 	}
 
 	@Override
-	public List<Daily> getSubjectDailys(Daily blah) {
+	public List<Daily> getSubjectDailys(Daily daily) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<String> getSubjects(Daily blah) {
+	public Set<String> getSubjects(Daily daily) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void modifyDaily(Daily daily) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Daily getDaily(Daily daily) {
 		// TODO Auto-generated method stub
 		return null;
 	}

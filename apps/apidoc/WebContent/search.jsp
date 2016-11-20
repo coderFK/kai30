@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/index.css" type="text/css">
+<link href="images/headIcon.png" rel="Shortcut Icon">
 <title>查找</title>
 </head>
 <body>

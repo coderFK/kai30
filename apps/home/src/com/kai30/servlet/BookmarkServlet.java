@@ -1,35 +1,34 @@
 package com.kai30.servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.kai30.javabean.Comment;
+
+import com.kai30.javabean.Bookmark;
 import com.kai30.model.UserService;
 import com.kai30.util.StringUtil;
 import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.Util;
 
 /**
- * Servlet implementation class CommentServlet
+ * Servlet implementation class BookmarksServlet
  */
-@WebServlet("/comment.do")
-public class CommentServlet extends HttpServlet {
+@WebServlet("/bookmark.do")
+public class BookmarkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String PAGE = "comment.jsp";
-    
+	private static final String PAGE = "bookmark.jsp";
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommentServlet() {
+    public BookmarkServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +40,7 @@ public class CommentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		process(request, response);
 	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -49,19 +48,30 @@ public class CommentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		process(request, response);
 	}
-	
-	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+
+	private void process(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
 		request.setCharacterEncoding("UTF-8");
-		String username = (String) request.getSession().getAttribute("login");
-		String content = request.getParameter("content");
+		HttpSession session = request.getSession();
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
-		if(!StringUtil.isInvalidKey(content)){
-			us.saveComment(new Comment(username, new Date(), content));
+		String username = (String) session.getAttribute("login");
+		String url = request.getParameter("content");
+		
+		if(!StringUtil.isInvalidKey(url)){
+			Date date = new Date();
+			Bookmark bookmark = Bookmark.createBookmark(username, date, url);
+			if(bookmark!=null){
+				us.saveBookmark(bookmark);	
+			}
 		}
-			
-		Set<Comment> comments = us.getComments();
-		request.setAttribute("comments", comments);
+		
+		
+		LinkedList<Bookmark> bookmarks = us.getBookmarks(username);
+		request.setAttribute("bookmarks", bookmarks);
 		request.getRequestDispatcher(PAGE).forward(request, response);
+		
 	}
 
 }

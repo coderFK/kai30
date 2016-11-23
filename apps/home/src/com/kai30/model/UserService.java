@@ -1,17 +1,23 @@
 package com.kai30.model;
 
+import java.util.LinkedList;
 import java.util.Set;
 
 import com.kai30.javabean.Account;
+import com.kai30.javabean.Bookmark;
 import com.kai30.javabean.Comment;
 
 public class UserService {
 	AccountDAO accountDAO;
 	CommentDAO commentDAO;
-	public UserService(AccountDAO accountDAO, CommentDAO commentDAO) {
+	BookmarkDAO bookmarkDAO;
+	
+
+	public UserService(AccountDAO accountDAO, CommentDAO commentDAO, BookmarkDAO bookmarkDAO) {
 		super();
 		this.accountDAO = accountDAO;
 		this.commentDAO = commentDAO;
+		this.bookmarkDAO = bookmarkDAO;
 	}
 	
 	public Account getAccount(String username){
@@ -45,4 +51,10 @@ public class UserService {
 		return commentDAO.getComments();
 	}
 	
+	public LinkedList<Bookmark> getBookmarks(String username) {
+		return bookmarkDAO.getBookmarks(username);
+	}
+	public void saveBookmark(Bookmark bookmark) {
+		bookmarkDAO.saveBookmark(bookmark);
+	}
 }

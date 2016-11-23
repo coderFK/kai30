@@ -8,9 +8,12 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
+import com.kai30.javabean.Bookmark;
 import com.kai30.model.AccountDAO;
+import com.kai30.model.BookmarkDAO;
 import com.kai30.model.CommentDAO;
 import com.kai30.model.SaveAccountInJDBC;
+import com.kai30.model.SaveBookmarkInJDBC;
 import com.kai30.model.SaveCommentInJDBC;
 import com.kai30.model.UserService;
 
@@ -35,7 +38,8 @@ public class UserListener implements ServletContextListener{
 			DataSource dataSource = (DataSource) envContext.lookup("jdbc/kai30");
 			AccountDAO accountDAO = new SaveAccountInJDBC(dataSource);
 			CommentDAO commentDAO = new SaveCommentInJDBC(dataSource);
-			sce.getServletContext().setAttribute("us", new UserService(accountDAO, commentDAO));
+			BookmarkDAO bookmarkDAO = new SaveBookmarkInJDBC(dataSource);
+			sce.getServletContext().setAttribute("us", new UserService(accountDAO, commentDAO, bookmarkDAO));
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

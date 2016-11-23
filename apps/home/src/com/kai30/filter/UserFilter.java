@@ -18,7 +18,7 @@ import com.kai30.util.StringUtil;
 /**
  * Servlet Filter implementation class UserFilter
  */
-@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do"},
+@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do", "/comment.do"},
 		initParams=@WebInitParam(name="LOGIN_VIEW", value="/home"))
 public class UserFilter implements Filter {
 	private String login_view;
@@ -52,12 +52,17 @@ public class UserFilter implements Filter {
 		// place your code here
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		HttpSession session = req.getSession();
-		String username = (String) session.getAttribute("login");
-		if(!StringUtil.isInvalidKey(username)){
-			chain.doFilter(request, response);
+		try{
+			HttpSession session = req.getSession();
+			String username = (String) session.getAttribute("login");
+			if(!StringUtil.isInvalidKey(username)){
+				chain.doFilter(request, response);
+			}
+			else{
+				res.sendRedirect(login_view);
+			}
 		}
-		else{
+		catch(Exception e){
 			res.sendRedirect(login_view);
 		}
 		

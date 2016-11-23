@@ -7,6 +7,5 @@ import com.kai30.javabean.Comment;
 
 public interface CommentDAO {
 	void saveComment(Comment comment);
-	
 	TreeSet<Comment> getComments();
 }

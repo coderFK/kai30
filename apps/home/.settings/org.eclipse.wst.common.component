@@ -14,6 +14,9 @@
         <dependent-module archiveName="mail.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/G:/Java/source/javamail/mail.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="jsoup-1.7.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/G:/Java/source/HttpClient&amp;Jsoup/jar/jsoup-1.7.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="home"/>
         <property name="java-output-path" value="/home/build/classes"/>
     </wb-module>

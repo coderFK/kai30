@@ -54,7 +54,10 @@ public class UserService {
 	public LinkedList<Bookmark> getBookmarks(String username) {
 		return bookmarkDAO.getBookmarks(username);
 	}
-	public void saveBookmark(Bookmark bookmark) {
-		bookmarkDAO.saveBookmark(bookmark);
+	public void saveBookmark(LinkedList<Bookmark> bookmarks) {
+		bookmarkDAO.saveBookmark(bookmarks);
+	}
+	public void deleteBookmark(Bookmark bookmark){
+		bookmarkDAO.deleteBookmark(bookmark);
 	}
 }

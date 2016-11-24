@@ -71,7 +71,7 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 	}
 
 	@Override
-	public void saveBookmark(Bookmark bookmark) {
+	public void saveBookmark(LinkedList<Bookmark> bookmarks) {
 		Connection conn = null;
 		PreparedStatement state = null;
 		Exception err = null;
@@ -79,13 +79,15 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 			conn = dataSource.getConnection();
 			state = conn.prepareStatement(
 					"insert into user_bookmark(username, date, url, title, imgUrl) values(?, ?, ?, ?, ?)");
-			state.setString(1, bookmark.getUsername());
-			state.setTimestamp(2, new Timestamp(bookmark.getDate().getTime()));
-			state.setString(3, bookmark.getUrl());
-			state.setString(4, bookmark.getTitle());
-			state.setString(5, bookmark.getImgUrl());
-			state.executeUpdate();
-			
+			for (Bookmark bookmark : bookmarks) {
+				state.setString(1, bookmark.getUsername());
+				state.setTimestamp(2, new Timestamp(bookmark.getDate().getTime()));
+				state.setString(3, bookmark.getUrl());
+				state.setString(4, bookmark.getTitle());
+				state.setString(5, bookmark.getImgUrl());
+				state.addBatch();
+			}
+			state.executeBatch();
 		} catch (SQLException e) {
 			if(err==null){
 				err = e;
@@ -112,6 +114,43 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 			}
 		}
 		
+	}
+
+	@Override
+	public void deleteBookmark(Bookmark bookmark) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"delete from user_bookmark where date=? and username=?");
+			state.setTimestamp(1, new Timestamp( bookmark.getDate().getTime()));
+			state.setString(2, bookmark.getUsername());
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
 	}
 
 }

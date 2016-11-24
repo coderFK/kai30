@@ -7,5 +7,7 @@ import com.kai30.javabean.Bookmark;
 public interface BookmarkDAO {
 	LinkedList<Bookmark> getBookmarks(String username);
 	
-	void saveBookmark(Bookmark bookmark);
+	void saveBookmark(LinkedList<Bookmark> bookmarks);
+	
+	void deleteBookmark(Bookmark bookmark);
 }

@@ -1,6 +1,7 @@
 package com.kai30.javabean;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +17,17 @@ public class Bookmark {
 	String title;
 	String imgUrl;
 	
+
+	static LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+	public static LinkedList<Bookmark> getBookmarks() {
+		return bookmarks;
+	}
+
+	public static void setBookmarks(LinkedList<Bookmark> bookmarks) {
+		Bookmark.bookmarks = bookmarks;
+	}
+
+	private static String defaultImg = "images/default_icon.png";
 	
 	
 	public Bookmark(String username, Date date, String url, String title, String imgUrl) {
@@ -27,47 +39,51 @@ public class Bookmark {
 		this.imgUrl = imgUrl;
 	}
 
-	private Bookmark(){
+	public Bookmark(){
 		
 	}
 	
-	private Bookmark(String username, Date date) {
+	public Bookmark(String username, Date date) {
 		super();
 		this.username = username;
 		this.date = date;
 	}
 	
-	public static Bookmark createBookmark(String username, Date date, String url){
+	public static void createBookmark(String username, Date date, String url){
 		
 		Bookmark bookmark = new Bookmark(username, date);
-		
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(2000).get();
 			Elements ele_title = doc.select("head title");
-			Elements ele_imgUrl = doc.getElementsByAttributeValue("rel", "Shortcut Icon");
+//			Elements ele_imgUrl = doc.getElementsByAttributeValue("rel", "Shortcut Icon");
 			
 			bookmark.url = url;
 			
 			//处理标题
 			bookmark.title = ele_title.text();
-			if(!StringUtil.isInvalidKey(bookmark.title)){
-				bookmark.title = "标题";
+			if(StringUtil.isInvalidKey(bookmark.title)){
+				bookmark.title = url;
 			}
 			//处理图片URL
-			bookmark.imgUrl = ele_imgUrl.attr("href");
-			if(!StringUtil.isInvalidKey(bookmark.imgUrl) && !bookmark.imgUrl.startsWith("http")){
-				bookmark.imgUrl = url + "/" + bookmark.imgUrl;
-			}
-			else{
-				bookmark.imgUrl = "http://www.kai30.com/images/default.png";
-			}
+			bookmark.imgUrl = defaultImg;
+//			bookmark.imgUrl = ele_imgUrl.attr("href");
+//			if(!StringUtil.isInvalidKey(bookmark.imgUrl) && !bookmark.imgUrl.startsWith("http")){
+//				bookmark.imgUrl = url + "/" + bookmark.imgUrl;
+//			}
+//			else{
+//				bookmark.imgUrl = defaultImg;
+//			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return null;
+			bookmark.url = url;
+			bookmark.title = url;
+			bookmark.imgUrl = defaultImg;
+		}
+		finally{
+			bookmarks.add(bookmark);
 		}
 		
-		return bookmark;
 	}
 
 	public String getUsername() {

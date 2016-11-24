@@ -18,7 +18,7 @@ import com.kai30.util.StringUtil;
 /**
  * Servlet Filter implementation class UserFilter
  */
-@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do", "/comment.do"},
+@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do", "/comment.do", "/bookmark.do"},
 		initParams=@WebInitParam(name="LOGIN_VIEW", value="/home"))
 public class UserFilter implements Filter {
 	private String login_view;
@@ -60,10 +60,12 @@ public class UserFilter implements Filter {
 			}
 			else{
 				res.sendRedirect(login_view);
+				
 			}
 		}
 		catch(Exception e){
-			res.sendRedirect(login_view);
+//			res.sendRedirect(login_view);
+			e.printStackTrace();
 		}
 		
 	}

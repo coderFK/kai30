@@ -18,11 +18,22 @@
 	<hr />
 	<div>
 		<form action='bookmark.do' method='post'>
-			添加书签：
+			手动添加书签：
 			<br />
 			<textarea cols='80' rows='6' name='content' ></textarea>
 			<br />
-			<button type='submit'>添加</button>
+			<button type='submit' class="form_submit">添加</button>
+			多个书签可用空格分开，如<b style="height: 5px;">http://www.kai30.com http://www.baidu.com</b>
+	    </form>
+	    <hr>
+	    <form action='bookmark.do' method='post' enctype="multipart/form-data">
+	    	通过上传包含书签链接的Html文件添加书签：
+	    	<br />
+	    	<br />
+	    	<input type="file" name="bookmark_html" value="上传Html文件"/>
+	    	<br />
+	    	<br />
+	    	<button type='submit' class="form_submit" name="upload">添加</button>
 	    </form>
 	</div>
     
@@ -32,8 +43,8 @@
    	
     <c:forEach var="bookmark" items="${requestScope.bookmarks }">
     	<img alt="书签" src=${bookmark.getImgUrl() } style="height: 20px; width: 20px;">
-    	<b style="height: 20px;">${bookmark.getTitle() }</b>
-    	<a style="height: 20px;" href=${bookmark.getUrl() }>${bookmark.getUrl() }</a>
+    	<a style="height: 18px;" href=${bookmark.getUrl() } title="${bookmark.getUrl() }">${bookmark.getTitle() }</a>
+    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' id="daily_link">删除</a>	
     	<br />
    	</c:forEach>
 </body>

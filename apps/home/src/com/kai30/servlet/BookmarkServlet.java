@@ -50,7 +50,12 @@ public class BookmarkServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		process(request, response);
+		HttpSession session = request.getSession();
+		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		final String username = (String) session.getAttribute("login");
+		LinkedList<Bookmark> bookmarks = us.getBookmarks(username);
+		request.setAttribute("bookmarks", bookmarks);
+		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
 	
 	/**
@@ -58,84 +63,68 @@ public class BookmarkServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		process(request, response);
-	}
-
-
-	private void process(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		final String username = (String) session.getAttribute("login");
+		LinkedList<Bookmark> bookmarks = null;
+		if(StringUtil.isInvalidKey(request.getParameter("content"))){
+			bookmarks = addWithFile(request, us);
+		}
+		else{
+			bookmarks = addWithText(request, us);
+		}
 		
-		String content = getContent(request);
+		if(bookmarks!=null && !bookmarks.isEmpty()){
+			us.saveBookmark(bookmarks);
+		}
 		
+		request.setAttribute("bookmarks", us.getBookmarks(username));
+		request.getRequestDispatcher(PAGE).forward(request, response);
+	}
+
+	private LinkedList<Bookmark> addWithText(HttpServletRequest request, UserService us) {
+		LinkedList<Bookmark> bookmarks = null;
+		final String username = (String) request.getSession().getAttribute("login");
+		String content = (String) request.getParameter("content");
 		if(!StringUtil.isInvalidKey(content)){
-			final String urls [] = content.split(" ");
-			Bookmark.getBookmarks().clear();
+			String urls [] = content.split(" ");
+			Bookmark.initUserBookmarks(username);
 			for (int i = 0; i < urls.length; i++) {
 				final Date date = new Date();
 				final String url = urls[i];
 				new Thread(new Runnable(){
 					public void run() {
-						Bookmark.createBookmark(username, date, url);		
+						Bookmark.addWithText(username, date, url);		
 					}
 				}).start();
 			}
 			
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			if(Bookmark.getBookmarks()!= null && !Bookmark.getBookmarks().isEmpty()){
-				us.saveBookmark(Bookmark.getBookmarks());	
-			}
-				
+			bookmarks = Bookmark.getUserBookmarks(username);
+			while(bookmarks.size() != urls.length){}
 		}
-		
-		
-		LinkedList<Bookmark> bookmarks = us.getBookmarks(username);
-		request.setAttribute("bookmarks", bookmarks);
-		request.getRequestDispatcher(PAGE).forward(request, response);
-		
+		return bookmarks;
 	}
 
-	private String getContent(HttpServletRequest request) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String content = request.getParameter("content");
+	private LinkedList<Bookmark> addWithFile(HttpServletRequest request, UserService us) {
+		LinkedList<Bookmark> bookmarks = null;
 		try{
 			Part part = request.getPart("bookmark_html");
+			String username = (String) request.getSession().getAttribute("login");
 			if(part!=null){
 				String header = part.getHeader("Content-Disposition");
 				String filename = header.substring(header.indexOf("filename=\"") + 10,
 						header.lastIndexOf("\""));
-				
 				InputStream is = part.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				
-				StringBuilder sb_html = new StringBuilder("");
-				String line = null;
-				while((line=br.readLine())!=null){
-					sb_html.append(line);
-				}
-				Document doc = Jsoup.parse(sb_html.toString());
-				StringBuilder sb_content = new StringBuilder("");
-				Elements eles = doc.getElementsByTag("a");
-				for (Element element : eles) {
-					sb_content.append(element.attr("href") + " ");
-				}
-				content = sb_content.toString();
+				bookmarks = Bookmark.addWithFile(is, filename, username);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		return content;
+		return bookmarks;		
 	}
+
 
 }

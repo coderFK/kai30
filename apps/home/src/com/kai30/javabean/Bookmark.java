@@ -1,10 +1,16 @@
 package com.kai30.javabean;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.kai30.util.StringUtil;
@@ -17,18 +23,13 @@ public class Bookmark {
 	String title;
 	String imgUrl;
 	
-
-	static LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
-	public static LinkedList<Bookmark> getBookmarks() {
-		return bookmarks;
-	}
-
-	public static void setBookmarks(LinkedList<Bookmark> bookmarks) {
-		Bookmark.bookmarks = bookmarks;
-	}
-
 	private static String defaultImg = "images/default_icon.png";
+	private static HashMap<String, LinkedList<Bookmark>> userBookmarks =
+			new HashMap<String, LinkedList<Bookmark>>();
 	
+	public Bookmark(){
+		
+	}
 	
 	public Bookmark(String username, Date date, String url, String title, String imgUrl) {
 		super();
@@ -39,21 +40,17 @@ public class Bookmark {
 		this.imgUrl = imgUrl;
 	}
 
-	public Bookmark(){
-		
-	}
-	
 	public Bookmark(String username, Date date) {
 		super();
 		this.username = username;
 		this.date = date;
 	}
 	
-	public static void createBookmark(String username, Date date, String url){
+	public static void addWithText(String username, Date date, String url){
 		
 		Bookmark bookmark = new Bookmark(username, date);
 		try {
-			Document doc = Jsoup.connect(url).timeout(2000).get();
+			Document doc = Jsoup.connect(url).timeout(3000).get();
 			Elements ele_title = doc.select("head title");
 //			Elements ele_imgUrl = doc.getElementsByAttributeValue("rel", "Shortcut Icon");
 			
@@ -81,11 +78,54 @@ public class Bookmark {
 			bookmark.imgUrl = defaultImg;
 		}
 		finally{
-			bookmarks.add(bookmark);
+			setUserBookmarks(username, bookmark);
 		}
-		
 	}
-
+	
+	public static LinkedList<Bookmark> addWithFile(InputStream is, String filename, String username) {
+		LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+		try {
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			StringBuilder sb_html = new StringBuilder("");
+			String line = null;
+			while((line=br.readLine())!=null){
+				sb_html.append(line);
+			}
+			Document doc = Jsoup.parse(sb_html.toString());
+			Elements eles = doc.getElementsByTag("a");
+			for (Element element : eles) {
+				String url = element.attr("href");
+				String title = element.text();
+				String imgUrl = element.attr("icon");
+				
+				if(!StringUtil.isInvalidKey(url)){
+					if(StringUtil.isInvalidKey(imgUrl)){
+						imgUrl = "images/default_icon.png";
+					}
+					Bookmark bookmark = new Bookmark(username, new Date(), url, title, imgUrl);
+					bookmarks.add(bookmark);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bookmarks;
+	}
+	
+	public static void initUserBookmarks(String username) {
+		// TODO Auto-generated method stub
+		userBookmarks.put(username, new LinkedList<Bookmark>());
+	}
+	public static LinkedList<Bookmark> getUserBookmarks(String username) {
+		// TODO Auto-generated method stub
+		return userBookmarks.get(username);
+	}
+	public static void setUserBookmarks(String username, Bookmark bookmark) {
+		getUserBookmarks(username).add(bookmark);
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -156,5 +196,5 @@ public class Bookmark {
 			return false;
 		return true;
 	}
-	
+
 }

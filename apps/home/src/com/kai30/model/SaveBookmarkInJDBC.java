@@ -94,7 +94,7 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 			}
 		}
 		finally{
-			try {
+			 try {
 				if(state!=null){
 					state.close();	
 				}

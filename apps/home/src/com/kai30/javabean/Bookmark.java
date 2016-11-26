@@ -13,7 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 public class Bookmark {
 	
@@ -58,7 +58,7 @@ public class Bookmark {
 			
 			//处理标题
 			bookmark.title = ele_title.text();
-			if(StringUtil.isInvalidKey(bookmark.title)){
+			if(MyStringUtil.isInvalidKey(bookmark.title)){
 				bookmark.title = url;
 			}
 			//处理图片URL
@@ -99,8 +99,8 @@ public class Bookmark {
 				String title = element.text();
 				String imgUrl = element.attr("icon");
 				
-				if(!StringUtil.isInvalidKey(url)){
-					if(StringUtil.isInvalidKey(imgUrl)){
+				if(!MyStringUtil.isInvalidKey(url)){
+					if(MyStringUtil.isInvalidKey(imgUrl)){
 						imgUrl = "images/default_icon.png";
 					}
 					Bookmark bookmark = new Bookmark(username, new Date(), url, title, imgUrl);

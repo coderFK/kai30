@@ -26,7 +26,7 @@ import org.jsoup.select.Elements;
 
 import com.kai30.javabean.Bookmark;
 import com.kai30.model.UserService;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class BookmarksServlet
@@ -68,7 +68,7 @@ public class BookmarkServlet extends HttpServlet {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		final String username = (String) session.getAttribute("login");
 		LinkedList<Bookmark> bookmarks = null;
-		if(StringUtil.isInvalidKey(request.getParameter("content"))){
+		if(MyStringUtil.isInvalidKey(request.getParameter("content"))){
 			bookmarks = addWithFile(request, us);
 		}
 		else{
@@ -87,7 +87,7 @@ public class BookmarkServlet extends HttpServlet {
 		LinkedList<Bookmark> bookmarks = null;
 		final String username = (String) request.getSession().getAttribute("login");
 		String content = (String) request.getParameter("content");
-		if(!StringUtil.isInvalidKey(content)){
+		if(!MyStringUtil.isInvalidKey(content)){
 			String urls [] = content.split(" ");
 			Bookmark.initUserBookmarks(username);
 			for (int i = 0; i < urls.length; i++) {

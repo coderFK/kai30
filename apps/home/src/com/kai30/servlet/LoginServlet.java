@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kai30.model.UserService;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class ControllerServlet
@@ -45,6 +46,7 @@ public class LoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String name =req.getParameter("username");
 		String password =req.getParameter("password");
+		password = MyStringUtil.encryptPassword(password);
 		UserService us = (UserService) req.getServletContext().getAttribute("us");
 		
 		if(us.checkLoginIsOk(name, password)){

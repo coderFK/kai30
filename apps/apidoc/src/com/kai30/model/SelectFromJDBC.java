@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 import com.kai30.javabean.ClassBean;
 import com.kai30.javabean.PackageBean;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 public class SelectFromJDBC implements Select{
 	private TreeSet<PackageBean> pbList = 
@@ -23,7 +23,7 @@ public class SelectFromJDBC implements Select{
 	public SelectFromJDBC(String key, boolean isCaseSensitive) {
 		super();
 		
-		if(!StringUtil.isInvalidKey(key)){
+		if(!MyStringUtil.isInvalidKey(key)){
 			searchKey(key, isCaseSensitive);
 		}
 	}

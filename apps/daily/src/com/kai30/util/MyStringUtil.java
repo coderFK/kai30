@@ -1,6 +1,6 @@
 package com.kai30.util;
 
-public class StringUtil {
+public class MyStringUtil {
 	public static boolean isInvalidKey(String key){
 		if(key==null){
 			return true;
@@ -15,4 +15,5 @@ public class StringUtil {
 		}
 		return false;
 	}
+	
 }

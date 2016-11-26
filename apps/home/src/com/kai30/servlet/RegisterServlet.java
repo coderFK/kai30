@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.model.UserService;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -57,6 +58,10 @@ public class RegisterServlet extends HttpServlet {
 		if(us.isInvalidePassword(password, confirmedPasswd)){
 			errors.add("密码格式错误或不一致");
 		}
+		
+		//加密密码
+		password = MyStringUtil.encryptPassword(password);
+		
 		if(errors.isEmpty()){
 			us.createUserData(email, name, password);
 		}

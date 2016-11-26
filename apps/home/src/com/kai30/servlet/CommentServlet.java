@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Comment;
 import com.kai30.model.UserService;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 import com.mysql.jdbc.StringUtils;
 import com.mysql.jdbc.Util;
 
@@ -55,7 +55,7 @@ public class CommentServlet extends HttpServlet {
 		String username = (String) request.getSession().getAttribute("login");
 		String content = request.getParameter("content");
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
-		if(!StringUtil.isInvalidKey(content)){
+		if(!MyStringUtil.isInvalidKey(content)){
 			us.saveComment(new Comment(username, new Date(), content));
 		}
 			

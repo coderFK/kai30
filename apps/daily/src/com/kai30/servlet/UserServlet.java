@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Daily;
 import com.kai30.model.UserService;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class UserServlet
@@ -53,7 +53,7 @@ public class UserServlet extends HttpServlet {
 		Daily daily = new Daily();
 		daily.setUsername(name);
 		List<Daily> dailys;
-		if(StringUtil.isInvalidKey(subject)){
+		if(MyStringUtil.isInvalidKey(subject)){
 			dailys =us.getDailys(daily);
 		}
 		else{

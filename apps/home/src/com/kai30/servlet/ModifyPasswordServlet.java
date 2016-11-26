@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.model.UserService;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class ModifyPasswordServlet
@@ -54,6 +55,7 @@ public class ModifyPasswordServlet extends HttpServlet {
 			request.setAttribute("msg", "密码格式错误或者两次密码输入不一致！");
 		}
 		else{
+			password = MyStringUtil.encryptPassword(password);
 			us.modifyPassword(username, password);
 			request.setAttribute("msg", "修改成功！");
 		}

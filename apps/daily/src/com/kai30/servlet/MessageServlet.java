@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
 import com.kai30.model.UserService;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class MessageServlet
@@ -65,17 +65,20 @@ public class MessageServlet extends HttpServlet {
 		Daily daily = new Daily();
 		daily.setUsername(name);
 		//主题为空则为设置为其他
-		if(StringUtil.isInvalidKey(subject)){
+		if(MyStringUtil.isInvalidKey(subject)){
 			subject = "其他";
 		}
 		
-		if(StringUtil.isInvalidKey(content)||StringUtil.isInvalidKey(title)){
+		if(MyStringUtil.isInvalidKey(content)||MyStringUtil.isInvalidKey(title)){
 			request.setAttribute("msg", "写日志");
 			request.setAttribute("subject", subject);
 			request.setAttribute("title", title);
 			request.setAttribute("content", content);
 		}
 		else{
+			content = content.trim(); 
+			title = title.trim();
+			subject = subject.trim();
 			daily.setContent(new Content(content));
 			daily.setTitle(title);
 			daily.setSubject(subject);

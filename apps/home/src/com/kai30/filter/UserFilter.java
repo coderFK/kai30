@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet Filter implementation class UserFilter
@@ -55,7 +55,7 @@ public class UserFilter implements Filter {
 		try{
 			HttpSession session = req.getSession();
 			String username = (String) session.getAttribute("login");
-			if(!StringUtil.isInvalidKey(username)){
+			if(!MyStringUtil.isInvalidKey(username)){
 				chain.doFilter(request, response);
 			}
 			else{

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
 import com.kai30.model.UserService;
-import com.kai30.util.StringUtil;
+import com.kai30.util.MyStringUtil;
 
 /**
  * Servlet implementation class ModifyServlet
@@ -74,7 +74,7 @@ public class ModifyServlet extends HttpServlet {
 		String time = request.getParameter("time");
 		
 		try{
-			if(!StringUtil.isInvalidKey(date_str)){
+			if(!MyStringUtil.isInvalidKey(date_str)){
 				Date date = new Date(Long.parseLong(date_str));
 				Daily daily = new Daily();
 				daily.setUsername(name);
@@ -98,7 +98,7 @@ public class ModifyServlet extends HttpServlet {
 				request.setAttribute("subjects", subjects);
 				request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);
 			}
-			else if(!StringUtil.isInvalidKey(time)){
+			else if(!MyStringUtil.isInvalidKey(time)){
 				
 				String content = request.getParameter("content"); 
 				String title = request.getParameter("title");

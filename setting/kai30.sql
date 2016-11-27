@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
   `username` varchar(15) NOT NULL,
-  `password` varchar(32) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -36,7 +36,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('kai','123456','123@qqqq.com'),('master','123456','596448451@qq.com');
+INSERT INTO `account` VALUES ('kai','4QrcOUm6Wau+VuBX8g+IPg==','123@qqqq.com'),('master','4QrcOUm6Wau+VuBX8g+IPg==','596448451@qq.com');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +88,7 @@ CREATE TABLE `daily` (
 
 LOCK TABLES `daily` WRITE;
 /*!40000 ALTER TABLE `daily` DISABLE KEYS */;
-INSERT INTO `daily` VALUES ('master','2016-11-17 11:57:48','Java环境变量设置：\r\n新建系统变量:JAVA_HOME 和CLASSPATH \r\n变量名：JAVA_HOME \r\n变量值：C:\\Program Files\\Java\\jdk1.7.0\r\n变量名：CLASSPATH \r\n变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar;\r\n变量名：Path \r\n变量值：%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;','配置java环境变量','java'),('master','2016-11-18 14:53:18','如果是gzip压缩文件：\r\ntar zxvf x.tar.gz\r\n\r\n如果是bzip2压缩的\r\ntar jxvf x.tar.bz2','linux解压命令','linux '),('master','2016-11-18 14:54:26','每个应用程序必须指定Resource，即可在tomcat的conf目录下的server.xml中的<Host>节点中添加以下字段：\r\n<Resource auth=\"Container\" driverClassName=\"com.mysql.jdbc.Driver\" maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" name=\"jdbc/daily\" password=\"3721\" type=\"javax.sql.DataSource\" url=\"jdbc:mysql://localhost:3306/daily?useUnicode=true&amp;characterEncoding=UTF8\" username=\"root\"/>\r\n也可以在项目的META-INF文件夹中的context.xml文件中添加以下类似字段：\r\n<Context antiJARLocking=\"true\" path=\"/Weibo\">\r\n    <Resource name=\"jdbc/weibo\" \r\n      auth=\"Container\" type=\"javax.sql.DataSource\"\r\n      maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" username=\"root\" \r\n      password=\"3721\" driverClassName=\"com.mysql.jdbc.Driver\"\r\n      url=\"jdbc:mysql://localhost:3306/weibo?useUnicode=true&amp;characterEncoding=UTF8\"/>\r\n     \r\n    <Realm className=\"org.apache.catalina.realm.DataSourceRealm\"\r\n      localDataSource=\"true\"\r\n   dataSourceName=\"jdbc/weibo\"\r\n       userTable=\"t_account\" userNameCol=\"name\" userCredCol=\"password\"\r\n   userRoleTable=\"t_account_role\" roleNameCol=\"role\" />\r\n</Context>\r\n推荐第一种\r\n','tomcat配置MySQL的注意点','数据库'),('master','2016-11-18 14:55:19','编辑配置文件\r\nvim /etc/profile \r\n\r\nexport JAVA_HOME=/root/App/jdk8\r\nexport JAVA_BIN=$JAVA_HOME/bin\r\nexport JAVA_LIB=$JAVA_HOME/lib\r\nexport CLASSPATH=.:$JAVA_LIB/tools.jar:$JAVA_LIB/dt.jar\r\nexport PATH=$JAVA_BIN:$PATH\r\n\r\n重置\r\nsource /etc/profile','linux环境下配置java环境变量','java');
+INSERT INTO `daily` VALUES ('master','2016-11-17 11:57:48','Java环境变量设置：\r\n新建系统变量:JAVA_HOME 和CLASSPATH \r\n变量名：JAVA_HOME \r\n变量值：C:\\Program Files\\Java\\jdk1.7.0\r\n变量名：CLASSPATH \r\n变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar;\r\n变量名：Path \r\n变量值：%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;','配置java环境变量','java'),('master','2016-11-18 14:54:26','每个应用程序必须指定Resource，即可在tomcat的conf目录下的server.xml中的<Host>节点中添加以下字段：\r\n<Resource auth=\"Container\" driverClassName=\"com.mysql.jdbc.Driver\" maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" name=\"jdbc/daily\" password=\"3721\" type=\"javax.sql.DataSource\" url=\"jdbc:mysql://localhost:3306/daily?useUnicode=true&amp;characterEncoding=UTF8\" username=\"root\"/>\r\n也可以在项目的META-INF文件夹中的context.xml文件中添加以下类似字段：\r\n<Context antiJARLocking=\"true\" path=\"/Weibo\">\r\n    <Resource name=\"jdbc/weibo\" \r\n      auth=\"Container\" type=\"javax.sql.DataSource\"\r\n      maxActive=\"100\" maxIdle=\"30\" maxWait=\"10000\" username=\"root\" \r\n      password=\"3721\" driverClassName=\"com.mysql.jdbc.Driver\"\r\n      url=\"jdbc:mysql://localhost:3306/weibo?useUnicode=true&amp;characterEncoding=UTF8\"/>\r\n     \r\n    <Realm className=\"org.apache.catalina.realm.DataSourceRealm\"\r\n      localDataSource=\"true\"\r\n   dataSourceName=\"jdbc/weibo\"\r\n       userTable=\"t_account\" userNameCol=\"name\" userCredCol=\"password\"\r\n   userRoleTable=\"t_account_role\" roleNameCol=\"role\" />\r\n</Context>\r\n推荐第一种\r\n','tomcat配置MySQL的注意点','数据库'),('master','2016-11-19 09:00:35','编辑配置文件\r\nvim /etc/profile \r\n\r\nexport JAVA_HOME=/root/App/jdk8\r\nexport JAVA_BIN=$JAVA_HOME/bin\r\nexport JAVA_LIB=$JAVA_HOME/lib\r\nexport CLASSPATH=.:$JAVA_LIB/tools.jar:$JAVA_LIB/dt.jar\r\nexport PATH=$JAVA_BIN:$PATH\r\n\r\n重置\r\nsource /etc/profile','在linux环境下配置java环境变量','linux'),('master','2016-11-26 14:12:20',' public String EncoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException{\r\n        //确定计算方法\r\n        MessageDigest md5=MessageDigest.getInstance(\"MD5\");\r\n        BASE64Encoder base64en = new BASE64Encoder();\r\n        //加密后的字符串\r\n        String newstr=base64en.encode(md5.digest(str.getBytes(\"utf-8\")));\r\n        return newstr;\r\n    }','java中的MD5加密方法','java'),('master','2016-11-27 14:25:12','如果是gzip压缩文件：\r\ntar zxvf x.tar.gz\r\n\r\n如果是bzip2压缩的\r\ntar jxvf x.tar.bz2','linux解压命令','linux'),('master','2016-11-26 14:49:06','public static void modifyStirng(String key){\r\n		\r\n	//将字符串首尾的空格去除\r\n	key = key.trim();\r\n		\r\n}\r\n----------------\r\nString key = \"   value   \";\r\nmodifyString(key);\r\nSystem.out.println(key);\r\n----------------\r\nout:   value   \r\n----------------\r\n我在其他地方调用这个函数时，得到的值并不是修改过的，这让我们一度以为String是以值的形式传递\r\n其实String中函数参数中依然是引用传递，传递进来时是指向最初的字符串，\r\n在进行key = key.trim();操作后key就指向了一个新的字符串，即去掉首尾空字符的字符串，\r\n而最初的字符串依然没有变，且也没有变量名能够引用它,所以打印输出还是原字符串','String作为参数传递时其值的变化分析','java');
 /*!40000 ALTER TABLE `daily` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,6 +144,34 @@ INSERT INTO `java6_package` VALUES (1,'java.applet','java/applet/package-frame.h
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_bookmark`
+--
+
+DROP TABLE IF EXISTS `user_bookmark`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_bookmark` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` char(15) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `url` text NOT NULL,
+  `title` text NOT NULL,
+  `imgUrl` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1742 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_bookmark`
+--
+
+LOCK TABLES `user_bookmark` WRITE;
+/*!40000 ALTER TABLE `user_bookmark` DISABLE KEYS */;
+INSERT INTO `user_bookmark` VALUES (1739,'master','2016-11-25 03:32:16','http://www.baidu.com','百度一下，你就知道','images/default_icon.png'),(1740,'master','2016-11-25 03:32:16','http://www.kai30.com','kai30-我的个人开发之路','images/default_icon.png'),(1741,'master','2016-11-25 03:34:03','http://www.taobao.com','淘宝网 - 淘！我喜欢','images/default_icon.png');
+/*!40000 ALTER TABLE `user_bookmark` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_comment`
 --
 
@@ -178,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-18 22:56:14
+-- Dump completed on 2016-11-27 22:37:49

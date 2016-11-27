@@ -83,11 +83,14 @@ public class BookmarkServlet extends HttpServlet {
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
 
+	
 	private LinkedList<Bookmark> addWithText(HttpServletRequest request, UserService us) {
 		LinkedList<Bookmark> bookmarks = null;
 		final String username = (String) request.getSession().getAttribute("login");
 		String content = (String) request.getParameter("content");
+		
 		if(!MyStringUtil.isInvalidKey(content)){
+			content = content.trim();
 			String urls [] = content.split(" ");
 			Bookmark.initUserBookmarks(username);
 			for (int i = 0; i < urls.length; i++) {

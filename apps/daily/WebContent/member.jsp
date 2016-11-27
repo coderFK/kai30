@@ -13,11 +13,6 @@
 <title>日志</title>
 </head>
 <body>
-	<!-- 
-	<div class="icon_img">
-		<img src='images/icon.jpg' alt='${sessionScope.login }' />
-	</div>
-	 -->
 	<div>
 		<a href="/home" target="_top">主页</a>
 		<a href="/apidoc" target="_top">API帮助文档</a>
@@ -73,7 +68,6 @@
    	<c:forEach var="sub" items="${requestScope.subjects }">
    		<a href="/daily/user/${sessionScope.login}?subject=${sub}" id="daily_link2"><c:out value="${sub}"/></a>
    	</c:forEach>
-   	<hr />
    	
    	<hr />
    	<h3>按标题查找日志：</h3>

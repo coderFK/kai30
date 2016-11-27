@@ -105,6 +105,10 @@ public class ModifyServlet extends HttpServlet {
 				String subject = request.getParameter("subject");
 				Date date = new Date(Long.parseLong(time));
 				
+				content = content.trim();
+				title = title.trim();
+				subject = subject.trim();
+				
 				Daily daily = new Daily();
 				daily.setUsername(name);
 				daily.setDate(date);

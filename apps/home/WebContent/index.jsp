@@ -60,5 +60,7 @@
 		<li><a href="/home/master.html">关于本站与站长</a></li>
 	</ul>
 </div>
+
+<div class="footer">Copyright © 2017 Kai30 赣ICP备16011233号-1</div>
 </body>
 </html>

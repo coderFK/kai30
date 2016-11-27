@@ -48,11 +48,25 @@ public class MessageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		processRequest(request, response);
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("login");
+		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		Daily daily = new Daily();
+		daily.setUsername(username);
+		List<Daily> dailys = us.getDailys(daily);
+		Set<String> subjects = us.getSubjects(daily);
+		
+		request.setAttribute("dailys", dailys);
+		request.setAttribute("subjects", subjects);
+		request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);
 		
 	}
 
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
@@ -90,15 +104,6 @@ public class MessageServlet extends HttpServlet {
 		request.setAttribute("dailys", dailys);
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);
-	}
-
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		processRequest(request, response);
 	}
 
 }

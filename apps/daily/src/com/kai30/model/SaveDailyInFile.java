@@ -132,6 +132,12 @@ public class SaveDailyInFile implements DailyDAO{
 		return null;
 	}
 
+	@Override
+	public List<Daily> getSearchResult(Daily daily, String searchKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 //	public class Cmp implements Comparator<Date>{
 //		@Override

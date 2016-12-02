@@ -319,6 +319,52 @@ private DataSource dataSource;
 		
 		return targetDaily;
 	}
+
+	@Override
+	public List<Daily> getSearchResult(Daily daily, String searchKey) {
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<Daily> dailys = new LinkedList<Daily>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select date, content, title, subject from daily where username=?");
+			state.setString(1, daily.getUsername());
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				String title = result.getString(3);
+				if(title.contains(searchKey)){
+					dailys.addFirst(new Daily(daily.getUsername(), 
+							result.getTimestamp(1), new Content(result.getString(2)), 
+							result.getString(3), result.getString(4)));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return dailys;
+	}
 	
 	
 //	public class Cmp implements Comparator<Date>{

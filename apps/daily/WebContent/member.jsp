@@ -70,6 +70,13 @@
    	</c:forEach>
    	
    	<hr />
+   	<h3>搜索查找日志：</h3>
+   	<form method="post" action="searchDaily.do">
+   		<input type="text" name="searchKey" value="${requestScope.searchKey }"> <input type="submit" value="在标题中搜索">
+   	</form>
+   	<daily:Result/>
+   	<hr />
+   	
    	<h3>按标题查找日志：</h3>
    	<ul>
    	

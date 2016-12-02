@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns={"/delete.do", "/logout.do", "/member.jsp", "/message.do", "/modify.do"},
+@WebFilter(urlPatterns={"/delete.do", "/logout.do", "/member.jsp", "/message.do", "/modify.do","/searchDaily.do"},
 			initParams={@WebInitParam(name="LOGIN_VIEW", value="/home")})
 public class UserFilter implements Filter{
 	private String loginView = null;

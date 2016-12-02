@@ -20,5 +20,7 @@ public interface DailyDAO {
 	void deleteDaily(Daily daily);
 
 	void modifyDaily(Daily daily);
+
+	List<Daily> getSearchResult(Daily daily, String searchKey);
 	
 }

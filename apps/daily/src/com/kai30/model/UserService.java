@@ -49,4 +49,10 @@ public class UserService {
 	public boolean isDailyExisted(Daily daily){
 		return getDaily(daily)!=null;
 	}
+
+	public List<Daily> getSearchResult(Daily daily, String searchKey) {
+		// TODO Auto-generated method stub
+		return dailyDAO.getSearchResult(daily, searchKey);
+	}
+
 }

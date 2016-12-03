@@ -17,6 +17,11 @@ import com.kai30.util.MyStringUtil;
 
 public class Bookmark {
 	
+	public Bookmark(String username) {
+		super();
+		this.username = username;
+	}
+
 	String username;
 	Date date;
 	String url;

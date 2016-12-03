@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -19,12 +20,13 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 	}
 
 	@Override
-	public LinkedList<Bookmark> getBookmarks(String username) {
+	public LinkedList<Bookmark> getBookmarks(Bookmark bookmark) {
 		
 		Connection conn = null;
 		PreparedStatement state = null;
 		LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		Exception err = null;
+		String username = bookmark.getUsername();
 		try {
 			conn = dataSource.getConnection();
 			state = conn.prepareStatement(
@@ -36,8 +38,7 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 				String url = result.getString(2);
 				String title = result.getString(3);
 				String imgUrl = result.getString(4);
-				Bookmark bookmark = new Bookmark(username, date, url, title, imgUrl); 
-				bookmarks.add(bookmark);
+				bookmarks.add(new Bookmark(username, date, url, title, imgUrl));
 			}
 			
 		} catch (SQLException e) {
@@ -151,6 +152,53 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 		if(err!=null){
 			throw new RuntimeException(err);
 		}
+	}
+
+	@Override
+	public List<Bookmark> getSearchResult(Bookmark bookmark, String searchBookmarkKey) {
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select date, url, title, imgUrl from user_bookmark where username=?");
+			state.setString(1, bookmark.getUsername());
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				String title = result.getString(3);
+				if(title.contains(searchBookmarkKey)){
+					Date date = new Date(result.getTimestamp(1).getTime());
+					String url = result.getString(2);
+					String imgUrl = result.getString(4);
+					bookmarks.addFirst(new Bookmark(bookmark.getUsername(), date, url, title, imgUrl));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return bookmarks;
 	}
 
 }

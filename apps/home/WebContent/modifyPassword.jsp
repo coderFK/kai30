@@ -16,8 +16,8 @@
       	<div class="form_title">修改密码</div>
       	<br />
       	<div class="form_normal">
-      		设置新密码：<input type='text' name='password'>（最少6个字符）<br />
-      		确认新密码：<input type='text' name='confirmedPasswd'>
+      		设置新密码：<input type='password' name='password'>（最少6个字符）<br />
+      		确认新密码：<input type='password' name='confirmedPasswd'>
       	</div>
       	<br />
       	<div class="form_normal">

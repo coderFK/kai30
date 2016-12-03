@@ -39,11 +39,25 @@
     
 	<hr />   	
    	
+   	<h3>搜索查找日志：</h3>
+   	<form method="post" action="searchBookmark.do">
+   		<input type="text" name="searchBookmarkKey" value="${requestScope.searchBookmarkKey }"> 
+   		<input type="submit" value="搜索">
+   	</form>
+   	
+   	<c:forEach var="bookmark" items="${requestScope.searchBookmarkResult }">
+    	<img alt="书签" src=${bookmark.getImgUrl() } style="height: 15px; width: 15px;">
+    	<a target="_blank" href=${bookmark.getUrl() } title="${bookmark.getUrl() }" style="font-size:small;">${bookmark.getTitle() }</a>
+    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' id="daily_link">删除</a>	
+    	<br />
+   	</c:forEach>
+   	<hr />
+   	
    	<h2>所有书签：</h2>
    	
     <c:forEach var="bookmark" items="${requestScope.bookmarks }">
     	<img alt="书签" src=${bookmark.getImgUrl() } style="height: 15px; width: 15px;">
-    	<a href=${bookmark.getUrl() } title="${bookmark.getUrl() }" style="font-size:small;">${bookmark.getTitle() }</a>
+    	<a target="_blank" href=${bookmark.getUrl() } title="${bookmark.getUrl() }" style="font-size:small;">${bookmark.getTitle() }</a>
     	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' id="daily_link">删除</a>	
     	<br />
    	</c:forEach>

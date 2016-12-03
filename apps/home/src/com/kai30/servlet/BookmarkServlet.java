@@ -53,7 +53,8 @@ public class BookmarkServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		final String username = (String) session.getAttribute("login");
-		LinkedList<Bookmark> bookmarks = us.getBookmarks(username);
+		Bookmark bookmark = new Bookmark(username);
+		LinkedList<Bookmark> bookmarks = us.getBookmarks(bookmark);
 		request.setAttribute("bookmarks", bookmarks);
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
@@ -68,6 +69,7 @@ public class BookmarkServlet extends HttpServlet {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		final String username = (String) session.getAttribute("login");
 		LinkedList<Bookmark> bookmarks = null;
+		Bookmark bookmark = new Bookmark(username);
 		if(MyStringUtil.isInvalidKey(request.getParameter("content"))){
 			bookmarks = addWithFile(request, us);
 		}
@@ -79,7 +81,7 @@ public class BookmarkServlet extends HttpServlet {
 			us.saveBookmark(bookmarks);
 		}
 		
-		request.setAttribute("bookmarks", us.getBookmarks(username));
+		request.setAttribute("bookmarks", us.getBookmarks(bookmark));
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
 

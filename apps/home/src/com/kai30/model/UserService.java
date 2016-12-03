@@ -1,6 +1,7 @@
 package com.kai30.model;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import com.kai30.javabean.Account;
@@ -51,13 +52,18 @@ public class UserService {
 		return commentDAO.getComments();
 	}
 	
-	public LinkedList<Bookmark> getBookmarks(String username) {
-		return bookmarkDAO.getBookmarks(username);
+	public LinkedList<Bookmark> getBookmarks(Bookmark bookmark) {
+		return bookmarkDAO.getBookmarks(bookmark);
 	}
 	public void saveBookmark(LinkedList<Bookmark> bookmarks) {
 		bookmarkDAO.saveBookmark(bookmarks);
 	}
 	public void deleteBookmark(Bookmark bookmark){
 		bookmarkDAO.deleteBookmark(bookmark);
+	}
+
+	public List<Bookmark> getSearchResult(Bookmark bookmark, String searchBookmarkKey) {
+		// TODO Auto-generated method stub
+		return bookmarkDAO.getSearchResult(bookmark, searchBookmarkKey);
 	}
 }

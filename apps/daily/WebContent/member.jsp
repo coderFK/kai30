@@ -74,7 +74,14 @@
    	<form method="post" action="searchDaily.do">
    		<input type="text" name="searchKey" value="${requestScope.searchKey }"> <input type="submit" value="在标题中搜索">
    	</form>
-   	<daily:Result/>
+   	<c:if test="${requestScope.searchResult!=null && requestScope.searchResult.isEmpty()}">
+		抱歉，未在标题中查找到您要的内容
+	</c:if>
+	
+	<c:forEach var="daily" items="${requestScope.searchResult}">
+   		<a href='&#35;${daily.getDate().getTime() }' id="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<br />
+    </c:forEach>
    	<hr />
    	
    	<h3>按标题查找日志：</h3>

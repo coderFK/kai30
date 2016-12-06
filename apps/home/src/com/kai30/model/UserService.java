@@ -8,6 +8,7 @@ import com.kai30.javabean.Account;
 import com.kai30.javabean.Bookmark;
 import com.kai30.javabean.Comment;
 
+//相关逻辑操作
 public class UserService {
 	AccountDAO accountDAO;
 	CommentDAO commentDAO;

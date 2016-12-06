@@ -20,9 +20,10 @@ import com.kai30.model.UserService;
 @WebListener
 public class UserListener implements ServletContextListener{
 
+	
+	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		
 //		可随时改变储存方式
 //		文件存储
 //		saveInFile(sce);

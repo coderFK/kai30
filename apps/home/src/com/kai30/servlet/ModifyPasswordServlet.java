@@ -18,6 +18,7 @@ import com.kai30.util.MyStringUtil;
 @WebServlet("/modifyPassword.do")
 public class ModifyPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private String PAGE = "modifyPassword.jsp";
        
     /**
@@ -61,9 +62,6 @@ public class ModifyPasswordServlet extends HttpServlet {
 		}
 		
 		request.getRequestDispatcher(PAGE).forward(request, response);
-		
-		
-		
 	}
 
 }

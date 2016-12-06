@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import sun.misc.BASE64Encoder;
 
 public class MyStringUtil {
+	//验证字符串是否是无效字符
 	public static boolean isInvalidKey(String key){
 		if(key==null){
 			return true;
@@ -20,10 +21,11 @@ public class MyStringUtil {
 		return false;
 	}
 	
+	//单向加密密码
 	public static String encryptPassword(String password){
 		return encryptWithMD5(password);
 	}
-
+	//利用MD5技术
 	private static String encryptWithMD5(String password) {
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");

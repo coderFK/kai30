@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if(us.checkLoginIsOk(name, password)){
 //			req.login(name, password);
-			//将session放入当前应用的ServletContext中， 以便传递
+			//将session放入当前应用的ServletContext中， 以便传递数据
 			HttpSession sessionHome =req.getSession();
 			sessionHome.setAttribute("login", name);	
 			ServletContext context = req.getServletContext();

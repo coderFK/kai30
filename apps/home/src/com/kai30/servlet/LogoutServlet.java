@@ -29,18 +29,7 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession sessionHome = request.getSession();
-		ServletContext contextHome = request.getServletContext();
-		String name = (String) sessionHome.getAttribute("login");
-		if(name != null){
-			sessionHome.invalidate();
-			contextHome.removeAttribute("sessionHome");
-			
-		}
-//		request.logout();
-		response.sendRedirect(LOGIN_VIEW);
-		
+		processRequest(request, response);
 	}
 
 	/**
@@ -48,7 +37,21 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		processRequest(request, response);
+	}
+
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		HttpSession sessionHome = request.getSession();
+		ServletContext contextHome = request.getServletContext();
+		String name = (String) sessionHome.getAttribute("login");
+		if(name != null){
+			//销毁session，同时在context中移除session属性
+			sessionHome.invalidate();
+			contextHome.removeAttribute("sessionHome");
+		}
+//		request.logout();
+		response.sendRedirect(LOGIN_VIEW);
 	}
 
 }

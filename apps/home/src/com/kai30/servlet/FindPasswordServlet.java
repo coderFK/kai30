@@ -14,6 +14,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ import com.kai30.model.UserService;
 /**
  * Servlet implementation class SendServlet
  * 
- * request.getHeader("User-Agent");    //就是取得客户端的系统版本     
+request.getHeader("User-Agent");    //就是取得客户端的系统版本     
 request.getRemoteAddr();    //取得客户端的IP     
 request.getRemoteHost()     //取得客户端的主机名     
 request.getRemotePort();    //取得客户端的端口     
@@ -35,13 +36,24 @@ request.getRemoteUser();    //取得客户端的用户
 request.getLocalAddr();    //取得服务器IP     
 request.getLocalPort();    //取得服务器端口
  */
-@WebServlet("/findPassword.do")
+@WebServlet(urlPatterns="/findPassword.do", 
+initParams={@WebInitParam(name="web_path", value="http://www.kai30.com"),
+		@WebInitParam(name="from", value="smtp.qq.com"),
+		@WebInitParam(name="adminUsername", value="3311705190@qq.com"),
+		@WebInitParam(name="adminPassword", value="quxkovbqpxtocjfd")})
 public class FindPasswordServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private static final String PAGE = "findPassword.jsp";
-	String from = "smtp.qq.com";
-	String adminUsername = "3311705190@qq.com";
-	String adminPassword = "quxkovbqpxtocjfd";
+	
+	//需程序化的变量
+	//本网站的域名
+	private static String web_path;
+	//利用腾讯的邮件程序发送邮件，邮箱名和密码（密码会定期变化）
+	private static String from;
+	private static String adminUsername;
+	private static String adminPassword;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -50,12 +62,22 @@ public class FindPasswordServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		super.init();
+		web_path = getServletConfig().getInitParameter("web_path");
+		from = getServletConfig().getInitParameter("from");
+		adminUsername = getServletConfig().getInitParameter("adminUsername");
+		adminPassword = getServletConfig().getInitParameter("adminPassword");
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -64,15 +86,15 @@ public class FindPasswordServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		String name = request.getParameter("username"); 
+		String username = request.getParameter("username"); 
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		Account account = null;
-		if(name!=null&&us.isUserExisted(name)){
-			account = us.getAccount(name);
+		if(username!=null&&us.isUserExisted(username)){
+			account = us.getAccount(username);
 		}
 		else{
 			request.setAttribute("msg", "用户名不存在");
-			request.getRequestDispatcher("findPassword.jsp").forward(request, response);
+			request.getRequestDispatcher(PAGE).forward(request, response);
 			return;
 		}
 		
@@ -103,7 +125,6 @@ public class FindPasswordServlet extends HttpServlet {
 			request.setAttribute("msg", "发送邮件失败");
 			request.getRequestDispatcher(PAGE).forward(request, response);
 			e.printStackTrace();
-			
 		}
 	}
 
@@ -112,14 +133,12 @@ public class FindPasswordServlet extends HttpServlet {
 		MimeMessage msg = new MimeMessage(session);
 	    MimeBodyPart body = new MimeBodyPart();
 	    Multipart part = new MimeMultipart();
-	    String path = "http://123.206.213.249/home";
 	    String text = "<html>"
 	    		+ "<body>"
 	    		+ "<h5>"+ account.getUsername() +"，您好！您的密码为:" + account.getPassword()
-	    		+ "<br />您可以 <a href='"+path+"'> 马上登陆</a>"
+	    		+ "<br />您可以 <a href='"+web_path+"'> 马上登陆</a>"
 	    		+ "</body>"
 	    		+ "</html>";
-	    
 		try {
 			body.setContent(text, "text/html;charset=UTF-8");
 			part.addBodyPart(body);

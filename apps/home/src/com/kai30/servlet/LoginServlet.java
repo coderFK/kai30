@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static final String ERROR_PAGE = "index.jsp";
     private static final String SUCCESS_PAGE = "/daily/message.do";
+    private static final String SUCCESS_PAGE_MASTER = "index.jsp";
      
     /**
      * @see HttpServlet#HttpServlet()
@@ -57,7 +58,14 @@ public class LoginServlet extends HttpServlet {
 			ServletContext context = req.getServletContext();
 			context.setAttribute("sessionHome", sessionHome);
 			
-			res.sendRedirect(SUCCESS_PAGE);
+			if(us.checkUserIsMaster(name)){
+				sessionHome.setAttribute("isManager", "true");
+				res.sendRedirect(SUCCESS_PAGE_MASTER);
+			}
+			else{
+				res.sendRedirect(SUCCESS_PAGE);
+			}
+			
 //			req.getRequestDispatcher(SUCCESS_PAGE).forward(req, res);
 		}
 		else{

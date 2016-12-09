@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -223,6 +225,90 @@ public class SaveAccountInJDBC implements AccountDAO{
 		if(err!=null){
 			throw new RuntimeException(err);
 		}
+	}
+
+	@Override
+	public boolean checkUserIsMaster(String username) {
+		boolean isMaster = false;
+		Connection conn =null;
+		PreparedStatement state = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select role from account_role where username=?");
+			state.setString(1, username);
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				String role = result.getString(1);
+				if(role.equals("master")){
+					isMaster = true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if(state!=null){
+				try {
+					state.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return isMaster;
+	}
+
+	@Override
+	public List<Account> getAccounts() {
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		List<Account> accounts = new ArrayList<Account>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement("select username, password, email from account");
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				Account account = new Account(result.getString(1), result.getString(2), result.getString(3));
+				accounts.add(account);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+						
+		return accounts;
 	}
 	
 }

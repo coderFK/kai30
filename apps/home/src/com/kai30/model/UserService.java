@@ -25,8 +25,14 @@ public class UserService {
 	public Account getAccount(String username){
 		return accountDAO.getAccount(username);
 	}
+	public List<Account> getAccounts(){
+		return accountDAO.getAccounts();
+	}
 	public boolean checkLoginIsOk(String username, String password){
 		return accountDAO.checkLoginIsOk(username, password);
+	}
+	public boolean checkUserIsMaster(String username){
+		return accountDAO.checkUserIsMaster(username);
 	}
 	public boolean isUserExisted(String username) {
 		return accountDAO.isUserExisted(username);

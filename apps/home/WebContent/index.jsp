@@ -22,6 +22,9 @@
 				<li><a href="/home/bookmark.do">${sessionScope.login}的书签</a></li>
 				<li><a href="/daily/logout.do">退出当前账号</a></li>
 				<li><a href="/home/modifyPassword.jsp">修改密码</a></li>
+				<c:if test="${sessionScope.isManager != null}">
+					<li><a href="/home/manageUser.do">管理用户</a></li>
+				</c:if>
 			</ul>
 			
 		</c:when>

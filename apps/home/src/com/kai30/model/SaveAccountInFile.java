@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import com.kai30.javabean.Account;
 
@@ -134,6 +135,18 @@ public class SaveAccountInFile implements AccountDAO{
 	public void modifyPassword(String name, String password) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean checkUserIsMaster(String name) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Account> getAccounts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

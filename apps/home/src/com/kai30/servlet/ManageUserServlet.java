@@ -37,14 +37,12 @@ public class ManageUserServlet extends HttpServlet {
 		List<Account> accounts = us.getAccounts();
 		request.setAttribute("accounts", accounts);
 		request.getRequestDispatcher(MANAGE_VAGE).forward(request, response);;
-		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

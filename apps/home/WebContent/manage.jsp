@@ -11,8 +11,9 @@
 
 <h3 >用户</h3>
 <ul>
+<li>用户名 邮箱</li>	
 <c:forEach var="account" items="${requestScope.accounts }">
-	<li>${account.username }</li>	
+	<li><a href="/daily/user/${account.username }" target="_blank">${account.username }</a> ${account.email }</li>	
 </c:forEach>
 </ul>
 

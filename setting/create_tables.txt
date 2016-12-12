@@ -12,3 +12,6 @@ create table java6_package (id int auto_increment primary key, name char(100) no
 create table user_comment (id int auto_increment primary key, username char(15) not null, date timestamp not null, content text not null) charset=utf8;
 
 create table user_bookmark (id int auto_increment primary key, username char(15) not null, date timestamp not null, url text not null, title text not null, imgUrl text not null) charset=utf8;
+
+create table account_log(id int auto_increment primary key, username char(15) not null, message char(255) not nul
+l, date timestamp not null) charset=utf8;

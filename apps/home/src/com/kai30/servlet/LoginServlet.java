@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kai30.model.LogService;
 import com.kai30.model.UserService;
 import com.kai30.util.MyStringUtil;
 
@@ -45,20 +46,24 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
-		String name =req.getParameter("username");
+		String username =req.getParameter("username");
 		String password =req.getParameter("password");
 		password = MyStringUtil.encryptPassword(password);
 		UserService us = (UserService) req.getServletContext().getAttribute("us");
+		LogService logService = (LogService) req.getServletContext().getAttribute("logService");
 		
-		if(us.checkLoginIsOk(name, password)){
+		if(us.checkLoginIsOk(username, password)){
 //			req.login(name, password);
 			//将session放入当前应用的ServletContext中， 以便传递数据
 			HttpSession sessionHome =req.getSession();
-			sessionHome.setAttribute("login", name);	
+			sessionHome.setAttribute("login", username);	
 			ServletContext context = req.getServletContext();
 			context.setAttribute("sessionHome", sessionHome);
 			
-			if(us.checkUserIsMaster(name)){
+			//记录用户登陆
+			logService.accountLogin(username);
+			
+			if(us.checkUserIsMaster(username)){
 				sessionHome.setAttribute("isManager", "true");
 				res.sendRedirect(SUCCESS_PAGE_MASTER);
 			}

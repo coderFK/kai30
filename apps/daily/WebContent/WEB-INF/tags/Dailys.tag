@@ -9,7 +9,7 @@
        	 分类：<a name="${b.getDate().getTime() }" href="/daily/user/${b.getUsername()}?subject=${b.getSubject()}" id="daily_link2"><c:out value="${b.getSubject()}"/></a>
     	<br />
     	用户：<b >${b.getUsername()}</b>
-    	发布日期：<b><fmt:formatDate value="${b.getDate()}" dateStyle="full" timeStyle="full"/></b>
+    	发布日期：<b><fmt:formatDate value="${b.getDate()}" pattern="yyyy年MM月dd日 HH:mm:ss"/></b>
     	<br />
         <br />
                     内容：

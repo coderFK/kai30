@@ -34,8 +34,8 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();	
 		}
 //		request.logout();
+		//在主页中销毁账号
 		response.sendRedirect(LOGIN_VIEW);
-		
 	}
 
 	/**

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kai30.model.LogService;
 import com.kai30.model.UserService;
 import com.kai30.util.MyStringUtil;
 
@@ -45,15 +46,16 @@ public class RegisterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
 		String email =req.getParameter("email");
-		String name =req.getParameter("username");
+		String username =req.getParameter("username");
 		String password =req.getParameter("password");
 		String confirmedPasswd =req.getParameter("confirmedPasswd");
 		UserService us = (UserService) req.getServletContext().getAttribute("us");
+		LogService logService = (LogService) req.getServletContext().getAttribute("logService");
 		List<String> errors = new ArrayList<String>();
 		if(us.isInvalidEmail(email)){
 			errors.add("邮件填写错误");
 		}
-		if(us.isUserExisted(name)){
+		if(us.isUserExisted(username)){
 			errors.add("用户名已经存在");
 		}
 		if(us.isInvalidePassword(password, confirmedPasswd)){
@@ -64,7 +66,8 @@ public class RegisterServlet extends HttpServlet {
 		password = MyStringUtil.encryptPassword(password);
 		
 		if(errors.isEmpty()){
-			us.createUserData(email, name, password);
+			logService.accountRegister(username);
+			us.createUserData(email, username, password);
 		}
 		else{
 			req.setAttribute("errors", errors);

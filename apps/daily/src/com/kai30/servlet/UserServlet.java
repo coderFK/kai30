@@ -22,7 +22,7 @@ import com.kai30.util.MyStringUtil;
 })
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static String userView;
+    private static String USER_VIEW;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,7 +35,7 @@ public class UserServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		userView = getServletConfig().getInitParameter("USER_VIEW");
+		USER_VIEW = getServletConfig().getInitParameter("USER_VIEW");
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("user_name", name + "的日志");
 		}
 		request.setAttribute("dailys", dailys);
-		request.getRequestDispatcher(userView).forward(request, response);
+		request.getRequestDispatcher(USER_VIEW).forward(request, response);
 	}
 
 	/**

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kai30.model.LogService;
 import com.kai30.model.UserService;
 import com.kai30.util.MyStringUtil;
 
@@ -50,12 +51,14 @@ public class ModifyPasswordServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String username = (String) request.getSession().getAttribute("login");
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		String password = request.getParameter("password");
 		String confirmedPasswd = request.getParameter("confirmedPasswd");
 		if(us.isInvalidePassword(password, confirmedPasswd)){
 			request.setAttribute("msg", "密码格式错误或者两次密码输入不一致！");
 		}
 		else{
+			logService.accountModifyPassword(username);
 			password = MyStringUtil.encryptPassword(password);
 			us.modifyPassword(username, password);
 			request.setAttribute("msg", "修改成功！");

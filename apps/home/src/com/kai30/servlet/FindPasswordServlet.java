@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Account;
+import com.kai30.model.LogService;
 import com.kai30.model.UserService;
 
 
@@ -88,6 +89,7 @@ public class FindPasswordServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username"); 
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		Account account = null;
 		if(username!=null&&us.isUserExisted(username)){
 			account = us.getAccount(username);
@@ -115,6 +117,7 @@ public class FindPasswordServlet extends HttpServlet {
 			});
 			Message message = createEmail(ses, account, request);
 			Transport.send(message);
+			logService.accountFindPassword(username);
 			request.setAttribute("name", account.getUsername());
 			request.setAttribute("msg", "发送邮件成功");
 			request.setAttribute("loginErr", "发送邮件成功");

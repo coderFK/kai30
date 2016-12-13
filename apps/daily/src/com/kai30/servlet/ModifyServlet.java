@@ -45,8 +45,6 @@ public class ModifyServlet extends HttpServlet {
 		MESSAGE_VIEW = getServletConfig().getInitParameter("MESSAGE_VIEW");
 	}
 
-
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

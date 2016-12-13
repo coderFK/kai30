@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kai30.model.LogService;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -44,9 +46,11 @@ public class LogoutServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession sessionHome = request.getSession();
 		ServletContext contextHome = request.getServletContext();
-		String name = (String) sessionHome.getAttribute("login");
-		if(name != null){
+		String username = (String) sessionHome.getAttribute("login");
+		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
+		if(username != null){
 			//销毁session，同时在context中移除session属性
+			logService.accountLogout(username);
 			sessionHome.invalidate();
 			contextHome.removeAttribute("sessionHome");
 		}

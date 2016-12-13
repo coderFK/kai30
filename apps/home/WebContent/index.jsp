@@ -64,6 +64,6 @@
 	</ul>
 </div>
 
-<div class="footer">Copyright © 2017 Kai30 赣ICP备16011233号-1</div>
+<div class="footer">Copyright © 2016-2017 Kai30 赣ICP备16011233号-1</div>
 </body>
 </html>

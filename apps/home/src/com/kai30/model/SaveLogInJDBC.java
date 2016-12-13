@@ -33,7 +33,7 @@ public class SaveLogInJDBC implements LogDAO {
 			state.setString(1, accountLog.getUsername());
 			state.setString(2, accountLog.getMessage());
 			state.setTimestamp(3, new Timestamp(accountLog.getDate().getTime()));
-			
+			state.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class SaveLogInJDBC implements LogDAO {
 			ResultSet result = state.executeQuery();
 			while(result.next()){
 				AccountLog accountLog = new AccountLog(
-						result.getString(1), result.getString(2), new Date(result.getDate(1).getTime()));
+						result.getString(1), result.getString(2), new Date(result.getTimestamp(3).getTime()));
 				accountLogs.add(accountLog);
 			}
 			

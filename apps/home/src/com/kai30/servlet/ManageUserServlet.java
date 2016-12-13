@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Account;
+import com.kai30.javabean.AccountLog;
+import com.kai30.model.LogService;
 import com.kai30.model.UserService;
 
 /**
@@ -34,8 +36,11 @@ public class ManageUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		List<Account> accounts = us.getAccounts();
+		List<AccountLog> accountLogs = logService.getAccountLogs();
 		request.setAttribute("accounts", accounts);
+		request.setAttribute("accountLogs", accountLogs);
 		request.getRequestDispatcher(MANAGE_VAGE).forward(request, response);;
 	}
 

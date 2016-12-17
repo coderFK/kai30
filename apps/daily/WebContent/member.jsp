@@ -66,7 +66,7 @@
     <hr />
    	<h3>分类查找日志：</h3>
    	<c:forEach var="sub" items="${requestScope.subjects }">
-   		<a href="/daily/user/${sessionScope.login}?subject=${sub}" id="daily_link2"><c:out value="${sub}"/></a>
+   		<a href="/daily/user/${sessionScope.login}?subject=${sub}" class="daily_link2"><c:out value="${sub}"/></a>
    	</c:forEach>
    	
    	<hr />
@@ -79,7 +79,7 @@
 	</c:if>
 	
 	<c:forEach var="daily" items="${requestScope.searchResult}">
-   		<a href='&#35;${daily.getDate().getTime() }' id="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<a href='&#35;${daily.getDate().getTime() }' class="daily_link2"><c:out value="${daily.getTitle()}"/></a>
    		<br />
     </c:forEach>
    	<hr />
@@ -89,7 +89,7 @@
    	
    	</ul>
    	<c:forEach var="daily" items="${requestScope.dailys }">
-   		<a href='&#35;${daily.getDate().getTime() }' id="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<a href='&#35;${daily.getDate().getTime() }' class="daily_link2"><c:out value="${daily.getTitle()}"/></a>
    		<br />
    	</c:forEach>
    	<hr />

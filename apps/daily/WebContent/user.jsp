@@ -24,9 +24,42 @@
 			<h2>${requestScope.user_err}</h2>
 		</c:when>
 		<c:otherwise>
-			<h2>${requestScope.user_name}</h2>
+			<h2>${requestScope.name}的日志</h2>
 		</c:otherwise>
 	</c:choose>
+	<hr/>
+	
+	<hr />
+   	<h3>搜索查找日志：</h3>
+   	<form method="post" action="user/${requestScope.name}">
+   		<input type="text" name="searchKey" value="${requestScope.searchKey }"> <input type="submit" value="在标题中搜索">
+   	</form>
+   	<c:if test="${requestScope.searchResult!=null && requestScope.searchResult.isEmpty()}">
+		抱歉，未在标题中查找到您要的内容
+	</c:if>
+	
+	<c:forEach var="daily" items="${requestScope.searchResult}">
+   		<a href='&#35;${daily.getDate().getTime() }' class="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<br />
+    </c:forEach>
+	
+	<hr />
+   	<h3>分类查找日志：</h3>
+   	<c:forEach var="sub" items="${requestScope.subjects }">
+   		<a href="/daily/user/${requestScope.name}?subject=${sub}" class="daily_link2"><c:out value="${sub}"/></a>
+   	</c:forEach>
+   	
+   	<hr />
+   	
+   	<h3>按标题查找日志：</h3>
+   	<ul>
+   	
+   	</ul>
+   	<c:forEach var="daily" items="${requestScope.dailys }">
+   		<a href='&#35;${daily.getDate().getTime() }' class="daily_link2"><c:out value="${daily.getTitle()}"/></a>
+   		<br />
+   	</c:forEach>
+   	<hr />
 	
 	<hr/>
 	<daily:Dailys/>

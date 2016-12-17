@@ -2,6 +2,7 @@ package com.kai30.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -42,41 +43,50 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		process(request, response);
-	}
-
-	private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		String name = request.getPathInfo().substring(1);
-		String subject = (String) request.getParameter("subject");
+		String subject = request.getParameter("subject");
 		Daily daily = new Daily();
 		daily.setUsername(name);
 		List<Daily> dailys;
+		Set<String> subjects;
 		if(MyStringUtil.isInvalidKey(subject)){
 			dailys =us.getDailys(daily);
+			subjects = us.getSubjects(daily);
 		}
 		else{
 			daily.setSubject(subject);
 			dailys =us.getSubjectDailys(daily);
+			subjects = us.getSubjects(daily);
 		}
 		
 		if(dailys.isEmpty()){
 			request.setAttribute("user_err", "抱歉，该用户不存在或者他还没有日志。");
 		}
-		else{
-			request.setAttribute("user_name", name + "的日志");
-		}
+		
+		request.setAttribute("name", name);
 		request.setAttribute("dailys", dailys);
+		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher(USER_VIEW).forward(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		process(request, response);
+		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		String name = request.getPathInfo().substring(1);
+		
+		String searchKey = request.getParameter("searchKey");
+		if(!MyStringUtil.isInvalidKey(searchKey)){
+			Daily daily = new Daily();
+			daily.setUsername(name);
+			List<Daily> searchResult = us.getSearchResult(daily, searchKey);
+			request.setAttribute("searchKey", searchKey);
+			request.setAttribute("searchResult", searchResult);
+		}
+		doGet(request, response);
 	}
 
 }

@@ -71,7 +71,7 @@
    	
    	<hr />
    	<h3>搜索查找日志：</h3>
-   	<form method="post" action="searchDaily.do">
+   	<form method="post" action="message.do">
    		<input type="text" name="searchKey" value="${requestScope.searchKey }"> <input type="submit" value="在标题中搜索">
    	</form>
    	<c:if test="${requestScope.searchResult!=null && requestScope.searchResult.isEmpty()}">

@@ -78,6 +78,12 @@ public class MessageServlet extends HttpServlet {
 		UserService us = (UserService) request.getServletContext().getAttribute("us");
 		Daily daily = new Daily();
 		daily.setUsername(name);
+		String searchKey = request.getParameter("searchKey");
+		if(!MyStringUtil.isInvalidKey(searchKey)){
+			List<Daily> searchResult = us.getSearchResult(daily, searchKey);
+			request.setAttribute("searchKey", searchKey);
+			request.setAttribute("searchResult", searchResult);
+		}
 		//主题为空则为设置为其他
 		if(MyStringUtil.isInvalidKey(subject)){
 			subject = "其他";

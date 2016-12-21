@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.stream.FileCacheImageInputStream;
 import javax.servlet.ServletException;
@@ -70,7 +71,13 @@ public class BookmarkServlet extends HttpServlet {
 		final String username = (String) session.getAttribute("login");
 		LinkedList<Bookmark> bookmarks = null;
 		Bookmark bookmark = new Bookmark(username);
-		if(MyStringUtil.isInvalidKey(request.getParameter("content"))){
+		String searchBookmarkKey = request.getParameter("searchBookmarkKey");
+		if(!MyStringUtil.isInvalidKey(searchBookmarkKey)){
+			List<Bookmark> searchResult = us.getSearchResult(bookmark, searchBookmarkKey);
+			request.setAttribute("searchBookmarkKey", searchBookmarkKey);
+			request.setAttribute("searchBookmarkResult", searchResult);
+		}
+		else if(MyStringUtil.isInvalidKey(request.getParameter("content"))){
 			bookmarks = addWithFile(request, us);
 		}
 		else{

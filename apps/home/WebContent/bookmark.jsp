@@ -40,7 +40,7 @@
 	<hr />   	
    	
    	<h3>搜索查找日志：</h3>
-   	<form method="post" action="searchBookmark.do">
+   	<form method="post" action="bookmark.do">
    		<input type="text" name="searchBookmarkKey" value="${requestScope.searchBookmarkKey }"> 
    		<input type="submit" value="搜索">
    	</form>

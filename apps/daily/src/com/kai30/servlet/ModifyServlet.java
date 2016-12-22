@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
-import com.kai30.model.UserService;
+import com.kai30.model.DailyService;
 import com.kai30.util.MyStringUtil;
 
 /**
@@ -64,7 +64,7 @@ public class ModifyServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) 
 			throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute("login");
 		
@@ -77,7 +77,7 @@ public class ModifyServlet extends HttpServlet {
 				Daily daily = new Daily();
 				daily.setUsername(name);
 				daily.setDate(date);
-				daily = us.getDaily(daily);
+				daily = dailyService.getDaily(daily);
 				
 				String content = daily.getContent().getText();
 				String title = daily.getTitle();
@@ -90,8 +90,8 @@ public class ModifyServlet extends HttpServlet {
 				request.setAttribute("time", date);
 				request.setAttribute("modify", true);
 				
-				List<Daily> dailys = us.getDailys(daily);
-				Set<String> subjects = us.getSubjects(daily);
+				List<Daily> dailys = dailyService.getDailys(daily);
+				Set<String> subjects = dailyService.getSubjects(daily);
 				request.setAttribute("dailys", dailys);
 				request.setAttribute("subjects", subjects);
 				request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);
@@ -113,7 +113,7 @@ public class ModifyServlet extends HttpServlet {
 				daily.setContent(new Content(content));
 				daily.setTitle(title);
 				daily.setSubject(subject);
-				us.modifyDaily(daily);
+				dailyService.modifyDaily(daily);
 				response.sendRedirect(MESSAGE_VIEW);
 			}
 			else{

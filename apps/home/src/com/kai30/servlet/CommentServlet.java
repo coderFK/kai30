@@ -54,12 +54,12 @@ public class CommentServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String username = (String) request.getSession().getAttribute("login");
 		String content = request.getParameter("content");
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		if(!MyStringUtil.isInvalidKey(content)){
-			us.saveComment(new Comment(username, new Date(), content));
+			userService.saveComment(new Comment(username, new Date(), content));
 		}
 			
-		Set<Comment> comments = us.getComments();
+		Set<Comment> comments = userService.getComments();
 		request.setAttribute("comments", comments);
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}

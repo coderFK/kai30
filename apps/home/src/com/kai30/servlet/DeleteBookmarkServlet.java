@@ -49,14 +49,14 @@ public class DeleteBookmarkServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		String username = (String) session.getAttribute("login");
 		Long date = Long.parseLong(request.getParameter("date"));
 		Bookmark bookmark = new Bookmark(); 
 		
 		bookmark.setDate(new Date(date));
 		bookmark.setUsername(username);
-		us.deleteBookmark(bookmark);
+		userService.deleteBookmark(bookmark);
 		
 		response.sendRedirect(BOOKMARK_VIEW_OK);
 	}

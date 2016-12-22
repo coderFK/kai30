@@ -18,7 +18,7 @@ import com.kai30.util.MyStringUtil;
 /**
  * Servlet Filter implementation class UserFilter
  */
-@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do", "/comment.do", "/bookmark.do"},
+@WebFilter(urlPatterns={"/logout.do", "/modifyPassword.do", "/bookmark.do"},
 		initParams=@WebInitParam(name="LOGIN_VIEW", value="/home"))
 public class UserFilter implements Filter {
 	private String login_view;

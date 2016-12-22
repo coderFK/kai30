@@ -88,11 +88,11 @@ public class FindPasswordServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username"); 
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		Account account = null;
-		if(username!=null&&us.isUserExisted(username)){
-			account = us.getAccount(username);
+		if(username!=null&&userService.isUserExisted(username)){
+			account = userService.getAccount(username);
 		}
 		else{
 			request.setAttribute("msg", "用户名不存在");

@@ -52,10 +52,10 @@ public class BookmarkServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		final String username = (String) session.getAttribute("login");
 		Bookmark bookmark = new Bookmark(username);
-		LinkedList<Bookmark> bookmarks = us.getBookmarks(bookmark);
+		LinkedList<Bookmark> bookmarks = userService.getBookmarks(bookmark);
 		request.setAttribute("bookmarks", bookmarks);
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
@@ -67,28 +67,28 @@ public class BookmarkServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		final String username = (String) session.getAttribute("login");
 		LinkedList<Bookmark> bookmarks = null;
 		Bookmark bookmark = new Bookmark(username);
 		String searchBookmarkKey = request.getParameter("searchBookmarkKey");
 		if(!MyStringUtil.isInvalidKey(searchBookmarkKey)){
-			List<Bookmark> searchResult = us.getSearchResult(bookmark, searchBookmarkKey);
+			List<Bookmark> searchResult = userService.getSearchResult(bookmark, searchBookmarkKey);
 			request.setAttribute("searchBookmarkKey", searchBookmarkKey);
 			request.setAttribute("searchBookmarkResult", searchResult);
 		}
 		else if(MyStringUtil.isInvalidKey(request.getParameter("content"))){
-			bookmarks = addWithFile(request, us);
+			bookmarks = addWithFile(request, userService);
 		}
 		else{
-			bookmarks = addWithText(request, us);
+			bookmarks = addWithText(request, userService);
 		}
 		
 		if(bookmarks!=null && !bookmarks.isEmpty()){
-			us.saveBookmark(bookmarks);
+			userService.saveBookmark(bookmarks);
 		}
 		
-		request.setAttribute("bookmarks", us.getBookmarks(bookmark));
+		request.setAttribute("bookmarks", userService.getBookmarks(bookmark));
 		request.getRequestDispatcher(PAGE).forward(request, response);
 	}
 

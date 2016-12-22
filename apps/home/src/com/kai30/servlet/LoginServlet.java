@@ -49,10 +49,10 @@ public class LoginServlet extends HttpServlet {
 		String username =req.getParameter("username");
 		String password =req.getParameter("password");
 		password = MyStringUtil.encryptPassword(password);
-		UserService us = (UserService) req.getServletContext().getAttribute("us");
+		UserService userService = (UserService) req.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) req.getServletContext().getAttribute("logService");
 		
-		if(us.checkLoginIsOk(username, password)){
+		if(userService.checkLoginIsOk(username, password)){
 //			req.login(name, password);
 			//将session放入当前应用的ServletContext中， 以便传递数据
 			HttpSession sessionHome =req.getSession();
@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 			//记录用户登陆
 			logService.accountLogin(username);
 			
-			if(us.checkUserIsMaster(username)){
+			if(userService.checkUserIsMaster(username)){
 				sessionHome.setAttribute("isManager", "true");
 				res.sendRedirect(SUCCESS_PAGE_MASTER);
 			}

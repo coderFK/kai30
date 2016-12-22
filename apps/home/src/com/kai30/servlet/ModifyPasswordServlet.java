@@ -50,17 +50,17 @@ public class ModifyPasswordServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		String username = (String) request.getSession().getAttribute("login");
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		String password = request.getParameter("password");
 		String confirmedPasswd = request.getParameter("confirmedPasswd");
-		if(us.isInvalidePassword(password, confirmedPasswd)){
+		if(userService.isInvalidePassword(password, confirmedPasswd)){
 			request.setAttribute("msg", "密码格式错误或者两次密码输入不一致！");
 		}
 		else{
 			logService.accountModifyPassword(username);
 			password = MyStringUtil.encryptPassword(password);
-			us.modifyPassword(username, password);
+			userService.modifyPassword(username, password);
 			request.setAttribute("msg", "修改成功！");
 		}
 		

@@ -6,15 +6,17 @@
 	<c:forEach var="b" items="${requestScope.dailys}">
 		 标题：<b ><c:out value="${b.getTitle()}"/></b>
         <br />
-       	 分类：<a name="${b.getDate().getTime() }" href="/daily/user/${b.getUsername()}?subject=${b.getSubject()}" class="daily_link2"><c:out value="${b.getSubject()}"/></a>
+       	 分类：<a name="${b.getDate().getTime() }" 
+       	 href="/daily/user/${b.getUsername()}?subject=${b.getSubject()}" 
+       	 class="daily_link2">
+       	 <c:out value="${b.getSubject()}"/></a>
     	<br />
     	用户：<b >${b.getUsername()}</b>
+    	<br />
     	发布日期：<b><fmt:formatDate value="${b.getDate()}" pattern="yyyy年MM月dd日 HH:mm:ss"/></b>
     	<br />
-        <br />
                     内容：
         <br />      
-        <br />     	
         <c:forEach var="line" items="${b.getContent().getTextList()}">
         	<b>${line}</b>
         </c:forEach>

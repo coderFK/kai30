@@ -49,16 +49,16 @@ public class RegisterServlet extends HttpServlet {
 		String username =req.getParameter("username");
 		String password =req.getParameter("password");
 		String confirmedPasswd =req.getParameter("confirmedPasswd");
-		UserService us = (UserService) req.getServletContext().getAttribute("us");
+		UserService userService = (UserService) req.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) req.getServletContext().getAttribute("logService");
 		List<String> errors = new ArrayList<String>();
-		if(us.isInvalidEmail(email)){
+		if(userService.isInvalidEmail(email)){
 			errors.add("邮件填写错误");
 		}
-		if(us.isUserExisted(username)){
+		if(userService.isUserExisted(username)){
 			errors.add("用户名已经存在");
 		}
-		if(us.isInvalidePassword(password, confirmedPasswd)){
+		if(userService.isInvalidePassword(password, confirmedPasswd)){
 			errors.add("密码格式错误或不一致");
 		}
 		
@@ -67,7 +67,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		if(errors.isEmpty()){
 			logService.accountRegister(username);
-			us.createUserData(email, username, password);
+			userService.createUserData(email, username, password);
 		}
 		else{
 			req.setAttribute("errors", errors);

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kai30.javabean.Daily;
-import com.kai30.model.UserService;
+import com.kai30.model.DailyService;
 import com.kai30.util.MyStringUtil;
 
 /**
@@ -43,7 +43,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
 		String name = request.getPathInfo().substring(1);
 		String subject = request.getParameter("subject");
 		Daily daily = new Daily();
@@ -51,13 +51,13 @@ public class UserServlet extends HttpServlet {
 		List<Daily> dailys;
 		Set<String> subjects;
 		if(MyStringUtil.isInvalidKey(subject)){
-			dailys =us.getDailys(daily);
-			subjects = us.getSubjects(daily);
+			dailys =dailyService.getDailys(daily);
+			subjects = dailyService.getSubjects(daily);
 		}
 		else{
 			daily.setSubject(subject);
-			dailys =us.getSubjectDailys(daily);
-			subjects = us.getSubjects(daily);
+			dailys =dailyService.getSubjectDailys(daily);
+			subjects = dailyService.getSubjects(daily);
 		}
 		
 		if(dailys.isEmpty()){
@@ -75,14 +75,14 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
 		String name = request.getPathInfo().substring(1);
 		
 		String searchKey = request.getParameter("searchKey");
 		if(!MyStringUtil.isInvalidKey(searchKey)){
 			Daily daily = new Daily();
 			daily.setUsername(name);
-			List<Daily> searchResult = us.getSearchResult(daily, searchKey);
+			List<Daily> searchResult = dailyService.getSearchResult(daily, searchKey);
 			request.setAttribute("searchKey", searchKey);
 			request.setAttribute("searchResult", searchResult);
 		}

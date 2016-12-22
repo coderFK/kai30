@@ -1,29 +1,29 @@
 package com.kai30.servlet;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.kai30.javabean.Daily;
 import com.kai30.model.DailyService;
+import com.kai30.util.MyStringUtil;
 
 /**
- * Servlet implementation class DeleteServlet
+ * Servlet implementation class DailyServlet
  */
-@WebServlet("/delete.do")
-public class DeleteServlet extends HttpServlet {
+@WebServlet("/daily.do")
+public class DailyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static final String MEMBER_VIEW_OK = "message.do";
+	private static String INDEX_VIEW = "index.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteServlet() {
+    public DailyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,27 +33,27 @@ public class DeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
 		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
-		String name = (String) session.getAttribute("login");
-		Long date = Long.parseLong(request.getParameter("date"));
-		Daily daily = new Daily();
-		
-		daily.setDate(new Date(date));
-		daily.setUsername(name);
-		dailyService.deleteDaily(daily);
-		
-		response.sendRedirect(MEMBER_VIEW_OK);
+		List<Daily> allDailys = dailyService.getAllDailys();
+		request.setAttribute("dailys", allDailys);
+		request.getRequestDispatcher(INDEX_VIEW).forward(request, response);
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
+		String searchKey = request.getParameter("searchKey");
+		List<Daily> allDailys = dailyService.getAllDailys();
+		request.setAttribute("dailys", allDailys);
+		if(!MyStringUtil.isInvalidKey(searchKey)){
+			List<Daily> searchResult = dailyService.getAllSearchResult(searchKey);
+			request.setAttribute("searchResult", searchResult);
+		}
+		request.getRequestDispatcher(INDEX_VIEW).forward(request, response);
 	}
 
 }

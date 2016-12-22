@@ -5,12 +5,12 @@ import java.util.Set;
 
 import com.kai30.javabean.Daily;
 
-public class UserService {
+public class DailyService {
 	
 	DailyDAO dailyDAO;
 	
 	
-	public UserService( DailyDAO dailyDAO) {
+	public DailyService( DailyDAO dailyDAO) {
 		super();
 		this.dailyDAO = dailyDAO;
 	}
@@ -53,6 +53,14 @@ public class UserService {
 	public List<Daily> getSearchResult(Daily daily, String searchKey) {
 		// TODO Auto-generated method stub
 		return dailyDAO.getSearchResult(daily, searchKey);
+	}
+	
+	public List<Daily> getAllDailys(){
+		return dailyDAO.getAllDailys();
+	}
+	
+	public List<Daily> getAllSearchResult(String searchKey) {
+		return dailyDAO.getAllSearchResult(searchKey);
 	}
 
 }

@@ -41,7 +41,7 @@ private DataSource dataSource;
 			ResultSet result = state.executeQuery();
 			while(result.next()){
 				dailys.addFirst(new Daily(daily.getUsername(), 
-						result.getTimestamp(1), new Content(result.getString(2)), 
+						new Date(result.getTimestamp(1).getTime()), new Content(result.getString(2)), 
 						result.getString(3), result.getString(4)));
 			}
 		} catch (SQLException e) {
@@ -164,7 +164,7 @@ private DataSource dataSource;
 			ResultSet result = state.executeQuery();
 			while(result.next()){
 				dailys.addFirst(new Daily(daily.getUsername(), 
-						result.getTimestamp(1), new Content(result.getString(2)), 
+						new Date(result.getTimestamp(1).getTime()), new Content(result.getString(2)), 
 						result.getString(3), result.getString(4)));
 			}
 		} catch (SQLException e) {
@@ -336,7 +336,7 @@ private DataSource dataSource;
 				String title = result.getString(3);
 				if(title.contains(searchKey)){
 					dailys.addFirst(new Daily(daily.getUsername(), 
-							result.getTimestamp(1), new Content(result.getString(2)), 
+							new Date(result.getTimestamp(1).getTime()), new Content(result.getString(2)), 
 							result.getString(3), result.getString(4)));
 				}
 			}
@@ -364,6 +364,96 @@ private DataSource dataSource;
 		}
 		
 		return dailys;
+	}
+
+	@Override
+	public List<Daily> getAllDailys() {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<Daily> dailys = new LinkedList<Daily>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select username, date, content, title, subject from daily");
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				dailys.addFirst(new Daily(result.getString(1), 
+						new Date(result.getTimestamp(2).getTime()), new Content(result.getString(3)), 
+						result.getString(4), result.getString(5)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return dailys;
+	}
+
+	@Override
+	public List<Daily> getAllSearchResult(String searchKey) {
+		
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		LinkedList<Daily> dailys = new LinkedList<Daily>();
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"select username, date, content, title, subject from daily");
+			ResultSet result = state.executeQuery();
+			while(result.next()){
+				String title = result.getString(4);
+				if(title.contains(searchKey) || searchKey.contains(title)){
+					dailys.addFirst(new Daily(result.getString(1), 
+							new Date(result.getTimestamp(2).getTime()), new Content(result.getString(3)), 
+							result.getString(4), result.getString(5)));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+		
+		return dailys;
+		
 	}
 	
 	

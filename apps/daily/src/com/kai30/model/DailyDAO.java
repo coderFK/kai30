@@ -23,4 +23,8 @@ public interface DailyDAO {
 
 	List<Daily> getSearchResult(Daily daily, String searchKey);
 	
+	List<Daily> getAllDailys();
+
+	List<Daily> getAllSearchResult(String searchKey);
+	
 }

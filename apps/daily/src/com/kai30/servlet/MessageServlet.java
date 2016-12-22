@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kai30.javabean.Content;
 import com.kai30.javabean.Daily;
-import com.kai30.model.UserService;
+import com.kai30.model.DailyService;
 import com.kai30.util.MyStringUtil;
 
 /**
@@ -50,11 +50,11 @@ public class MessageServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("login");
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
 		Daily daily = new Daily();
 		daily.setUsername(username);
-		List<Daily> dailys = us.getDailys(daily);
-		Set<String> subjects = us.getSubjects(daily);
+		List<Daily> dailys = dailyService.getDailys(daily);
+		Set<String> subjects = dailyService.getSubjects(daily);
 		
 		request.setAttribute("dailys", dailys);
 		request.setAttribute("subjects", subjects);
@@ -75,12 +75,12 @@ public class MessageServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String subject = request.getParameter("subject");
 		
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		DailyService dailyService = (DailyService) request.getServletContext().getAttribute("dailyService");
 		Daily daily = new Daily();
 		daily.setUsername(name);
 		String searchKey = request.getParameter("searchKey");
 		if(!MyStringUtil.isInvalidKey(searchKey)){
-			List<Daily> searchResult = us.getSearchResult(daily, searchKey);
+			List<Daily> searchResult = dailyService.getSearchResult(daily, searchKey);
 			request.setAttribute("searchKey", searchKey);
 			request.setAttribute("searchResult", searchResult);
 		}
@@ -103,10 +103,10 @@ public class MessageServlet extends HttpServlet {
 			daily.setTitle(title);
 			daily.setSubject(subject);
 			daily.setDate(new Date());
-			us.addDaily(daily);
+			dailyService.addDaily(daily);
 		}
-		List<Daily> dailys = us.getDailys(daily);
-		Set<String> subjects = us.getSubjects(daily);
+		List<Daily> dailys = dailyService.getDailys(daily);
+		Set<String> subjects = dailyService.getSubjects(daily);
 		request.setAttribute("dailys", dailys);
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher(MEMBER_VIEW).forward(request, response);

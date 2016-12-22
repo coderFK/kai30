@@ -44,7 +44,7 @@ public class UserListener implements ServletContextListener{
 			CommentDAO commentDAO = new SaveCommentInJDBC(dataSource);
 			BookmarkDAO bookmarkDAO = new SaveBookmarkInJDBC(dataSource);
 			LogDAO logDAO = new SaveLogInJDBC(dataSource);
-			sce.getServletContext().setAttribute("us", new UserService(accountDAO, commentDAO, bookmarkDAO));
+			sce.getServletContext().setAttribute("userService", new UserService(accountDAO, commentDAO, bookmarkDAO));
 			sce.getServletContext().setAttribute("logService", new LogService(logDAO));
 			
 		} catch (NamingException e) {

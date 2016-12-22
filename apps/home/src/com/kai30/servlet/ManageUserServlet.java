@@ -35,9 +35,9 @@ public class ManageUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserService us = (UserService) request.getServletContext().getAttribute("us");
+		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
-		List<Account> accounts = us.getAccounts();
+		List<Account> accounts = userService.getAccounts();
 		List<AccountLog> accountLogs = logService.getAccountLogs();
 		request.setAttribute("accounts", accounts);
 		request.setAttribute("accountLogs", accountLogs);

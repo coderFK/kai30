@@ -58,6 +58,7 @@
 	  
 <div class="class_other">
 	<ul style="color: #003366">
+		<li><a href="/daily">日志</a></li>
 		<li><a href="/apidoc">API帮助文档</a></li>
 		<li><a href="/home/comment.do">留言</a></li>
 		<li><a href="/home/master.html">关于本站与站长</a></li>

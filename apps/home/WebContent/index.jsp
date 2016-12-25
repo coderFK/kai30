@@ -45,6 +45,8 @@
 			      	<div class="form_normal">
 			      		<input type='submit' value='  登入  ' class="form_submit">
 			      	</div>
+			      	<input type="checkbox" name="rememberUser" >记住密码一周
+			      	
 			    </form>
 			    <br />
 			    <br />

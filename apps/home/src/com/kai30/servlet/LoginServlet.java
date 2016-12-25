@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String username =req.getParameter("username");
 		String password =req.getParameter("password");
+		String rememberUser = req.getParameter("rememberUser");
 		password = MyStringUtil.encryptPassword(password);
 		UserService userService = (UserService) req.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) req.getServletContext().getAttribute("logService");
@@ -60,16 +62,19 @@ public class LoginServlet extends HttpServlet {
 			ServletContext context = req.getServletContext();
 			context.setAttribute("sessionHome", sessionHome);
 			
+			if(!MyStringUtil.isInvalidKey(rememberUser)){
+				Cookie cookie = new Cookie("username", username);
+				cookie.setMaxAge(7* 24 * 60 * 60);
+				res.addCookie(cookie);
+			}
+			
 			//记录用户登陆
 			logService.accountLogin(username);
 			
 			if(userService.checkUserIsMaster(username)){
 				sessionHome.setAttribute("isManager", "true");
-				res.sendRedirect(SUCCESS_PAGE_MASTER);
 			}
-			else{
-				res.sendRedirect(SUCCESS_PAGE);
-			}
+			res.sendRedirect(SUCCESS_PAGE);
 			
 //			req.getRequestDispatcher(SUCCESS_PAGE).forward(req, res);
 		}

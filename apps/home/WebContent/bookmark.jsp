@@ -48,17 +48,20 @@
    	<c:forEach var="bookmark" items="${requestScope.searchBookmarkResult }">
     	<img alt="书签" src=${bookmark.getImgUrl() } style="height: 15px; width: 15px;">
     	<a target="_blank" href=${bookmark.getUrl() } title="${bookmark.getUrl() }" style="font-size:small;">${bookmark.getTitle() }</a>
-    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' id="daily_link">删除</a>	
+    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' class="daily_link">删除</a>	
     	<br />
    	</c:forEach>
    	<hr />
    	
    	<h2>所有书签：</h2>
    	
+   	<a href='/home/deleteBookmark.do?num=AllOfTheBookmarks' class="daily_link">删除所有书签</a>	
+   	<br />
+   	<br />
     <c:forEach var="bookmark" items="${requestScope.bookmarks }">
     	<img alt="书签" src=${bookmark.getImgUrl() } style="height: 15px; width: 15px;">
     	<a target="_blank" href=${bookmark.getUrl() } title="${bookmark.getUrl() }" style="font-size:small;">${bookmark.getTitle() }</a>
-    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' id="daily_link">删除</a>	
+    	<a href='/home/deleteBookmark.do?date=${bookmark.getDate().getTime()}' class="daily_link">删除</a>	
     	<br />
    	</c:forEach>
 </body>

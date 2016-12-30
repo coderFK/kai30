@@ -201,4 +201,40 @@ public class SaveBookmarkInJDBC implements BookmarkDAO{
 		return bookmarks;
 	}
 
+	@Override
+	public void deleteAllBookmark(Bookmark bookmark) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement state = null;
+		SQLException err = null;
+		try {
+			conn = dataSource.getConnection();
+			state = conn.prepareStatement(
+					"delete from user_bookmark where username=?");
+			state.setString(1, bookmark.getUsername());
+			state.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			err = e;
+		}
+		finally{
+			try {
+				if(state!=null){
+					state.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				if(err != null){
+					err = e;
+				}
+			}
+		}
+		if(err!=null){
+			throw new RuntimeException(err);
+		}
+	}
+
 }

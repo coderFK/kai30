@@ -12,5 +12,7 @@ public interface BookmarkDAO {
 	
 	void deleteBookmark(Bookmark bookmark);
 
+	void deleteAllBookmark(Bookmark bookmark);
+	
 	List<Bookmark> getSearchResult(Bookmark bookmark, String searchBookmarkKey);
 }

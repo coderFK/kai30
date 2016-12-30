@@ -38,21 +38,23 @@ public class LoginCookieServlet extends HttpServlet {
 		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		LogService logService = (LogService) request.getServletContext().getAttribute("logService");
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if("username".equals(cookie.getName())){
-				String username = cookie.getValue();
-				if(!MyStringUtil.isInvalidKey(username) && userService.isUserExisted(username)){
-					HttpSession sessionHome =request.getSession();
-					sessionHome.setAttribute("login", username);	
-					ServletContext context = request.getServletContext();
-					context.setAttribute("sessionHome", sessionHome);
-					
-					//记录用户登陆
-					logService.accountLogin(username);
-					if(userService.checkUserIsMaster(username)){
-						sessionHome.setAttribute("isManager", "true");
+		if(cookies!=null){
+			for (Cookie cookie : cookies) {
+				if("username".equals(cookie.getName())){
+					String username = cookie.getValue();
+					if(!MyStringUtil.isInvalidKey(username) && userService.isUserExisted(username)){
+						HttpSession sessionHome =request.getSession();
+						sessionHome.setAttribute("login", username);	
+						ServletContext context = request.getServletContext();
+						context.setAttribute("sessionHome", sessionHome);
+						
+						//记录用户登陆
+						logService.accountLogin(username);
+						if(userService.checkUserIsMaster(username)){
+							sessionHome.setAttribute("isManager", "true");
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}

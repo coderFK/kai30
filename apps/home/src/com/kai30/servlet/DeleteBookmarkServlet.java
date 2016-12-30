@@ -51,12 +51,19 @@ public class DeleteBookmarkServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserService userService = (UserService) request.getServletContext().getAttribute("userService");
 		String username = (String) session.getAttribute("login");
-		Long date = Long.parseLong(request.getParameter("date"));
-		Bookmark bookmark = new Bookmark(); 
-		
-		bookmark.setDate(new Date(date));
-		bookmark.setUsername(username);
-		userService.deleteBookmark(bookmark);
+		String allOfTheBookmarks = request.getParameter("num");
+		if("AllOfTheBookmarks".equals(allOfTheBookmarks)){
+			Bookmark bookmark = new Bookmark(); 
+			bookmark.setUsername(username);
+			userService.deleteAllBookmark(bookmark);
+		}
+		else{
+			Long date = Long.parseLong(request.getParameter("date"));
+			Bookmark bookmark = new Bookmark(); 
+			bookmark.setDate(new Date(date));
+			bookmark.setUsername(username);
+			userService.deleteBookmark(bookmark);
+		}
 		
 		response.sendRedirect(BOOKMARK_VIEW_OK);
 	}

@@ -68,6 +68,9 @@ public class UserService {
 	public void deleteBookmark(Bookmark bookmark){
 		bookmarkDAO.deleteBookmark(bookmark);
 	}
+	public void deleteAllBookmark(Bookmark bookmark){
+		bookmarkDAO.deleteAllBookmark(bookmark);
+	}
 
 	public List<Bookmark> getSearchResult(Bookmark bookmark, String searchBookmarkKey) {
 		// TODO Auto-generated method stub

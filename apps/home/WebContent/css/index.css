@@ -58,7 +58,7 @@ body{
 }
 
 
-.form_submit{
+#form_submit{
 	font-size: x-large;
 	text-align: center;
 	width: 100px;
@@ -71,7 +71,7 @@ a{
 	font-size:x-large;;
 }
 
-#daily_link{
+.daily_link{
 	color: red;
 	text-align: center;
 	font-size:small;;

@@ -41,7 +41,7 @@ public class ManageUserServlet extends HttpServlet {
 		List<AccountLog> accountLogs = logService.getAccountLogs();
 		request.setAttribute("accounts", accounts);
 		request.setAttribute("accountLogs", accountLogs);
-		request.getRequestDispatcher(MANAGE_VAGE).forward(request, response);;
+		request.getRequestDispatcher(MANAGE_VAGE).forward(request, response);
 	}
 
 	/**

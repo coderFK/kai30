@@ -24,6 +24,7 @@
 				<li><a href="/home/modifyPassword.jsp">修改密码</a></li>
 				<c:if test="${sessionScope.isManager != null}">
 					<li><a href="/home/manageUser.do">管理用户</a></li>
+					<li><a href="/home/others.do">其他</a></li>
 				</c:if>
 			</ul>
 			
